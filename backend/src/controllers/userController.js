@@ -1,7 +1,7 @@
 const bcrypt = require('bcryptjs');
 const { User } = require('../models');
 
-// Get all users (Admin only)
+
 exports.getAllUsers = async (req, res) => {
   try {
     const users = await User.findAll({ attributes: { exclude: ['password'] } });
@@ -11,7 +11,7 @@ exports.getAllUsers = async (req, res) => {
   }
 };
 
-// Get a single user by ID
+
 exports.getUserById = async (req, res) => {
   try {
     const user = await User.findByPk(req.params.id, { attributes: { exclude: ['password'] } });
@@ -22,7 +22,6 @@ exports.getUserById = async (req, res) => {
   }
 };
 
-// Update user password
 exports.updatePassword = async (req, res) => {
   try {
     const { oldPassword, newPassword } = req.body;
@@ -42,7 +41,7 @@ exports.updatePassword = async (req, res) => {
   }
 };
 
-// Delete a user (Admin only)
+
 exports.deleteUser = async (req, res) => {
   try {
     const user = await User.findByPk(req.params.id);

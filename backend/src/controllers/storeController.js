@@ -1,7 +1,7 @@
 const Store = require('../models/Store');
-const { Op } = require('sequelize'); // Import Op for search queries
+const { Op } = require('sequelize'); 
 
-// Create a new store
+
 exports.createStore = async (req, res) => {
   try {
     const { name, email, image, address, owner_id } = req.body;
@@ -12,7 +12,7 @@ exports.createStore = async (req, res) => {
   }
 };
 
-// Get all stores
+
 exports.getStores = async (req, res) => {
   try {
     const stores = await Store.findAll();
@@ -21,12 +21,9 @@ exports.getStores = async (req, res) => {
     res.status(500).json({ error: 'Server error' });
   }
 };
-
-// Search stores by name or address
 exports.searchStores = async (req, res) => {
   try {
-    const { query } = req.query; // Get search query from request
-
+    const { query } = req.query; 
     if (!query) {
       return res.status(400).json({ error: 'Search query is required' });
     }
@@ -34,8 +31,8 @@ exports.searchStores = async (req, res) => {
     const stores = await Store.findAll({
       where: {
         [Op.or]: [
-          { name: { [Op.iLike]: `%${query}%` } }, // Case-insensitive search for name
-          { address: { [Op.iLike]: `%${query}%` } } // Case-insensitive search for address
+          { name: { [Op.iLike]: `%${query}%` } }, 
+          { address: { [Op.iLike]: `%${query}%` } } 
         ]
       }
     });

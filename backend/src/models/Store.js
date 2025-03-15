@@ -8,7 +8,8 @@ const Store = sequelize.define('Store', {
   image: { type: DataTypes.STRING(400), allowNull: false },
   address: { type: DataTypes.STRING(400), allowNull: false },
   owner_id: { type: DataTypes.UUID, allowNull: false },
-  rating: { type: DataTypes.FLOAT, defaultValue: 0 }
+  rating: { type: DataTypes.FLOAT, defaultValue: 0 },
+  total_ratings: { type: DataTypes.INTEGER, defaultValue: 0 },
 });
 
 module.exports = Store;

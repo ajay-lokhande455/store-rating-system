@@ -6,6 +6,9 @@ const Rating = sequelize.define('Rating', {
   user_id: { type: DataTypes.UUID, allowNull: false },
   store_id: { type: DataTypes.UUID, allowNull: false },
   rating: { type: DataTypes.INTEGER, allowNull: false, validate: { min: 1, max: 5 } },
+  description: { type: DataTypes.STRING, allowNull: false },
+  createdAt: { type: DataTypes.DATE, defaultValue: DataTypes.NOW },
+  updatedAt: { type: DataTypes.DATE, defaultValue: DataTypes.NOW },
 });
 
 module.exports = Rating;
