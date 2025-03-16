@@ -25,7 +25,7 @@ exports.getAllStores = async (req, res) => {
 
 exports.searchStores = async (req, res) => {
   try {
-    const { query } = req.query; 
+    const { query } = req.query;
     if (!query) {
       return res.status(400).json({ error: 'Search query is required' });
     }
@@ -33,15 +33,17 @@ exports.searchStores = async (req, res) => {
     const stores = await Store.findAll({
       where: {
         [Op.or]: [
-          { name: { [Op.iLike]: `%${query}%` } }, 
-          { address: { [Op.iLike]: `%${query}%` } } 
+          { name: { [Op.like]: `%${query}%` } },  
+          { address: { [Op.like]: `%${query}%` } }  
         ]
       }
     });
 
+    console.log("Found stores:", stores);
     res.json(stores);
   } catch (error) {
-    res.status(500).json({ error: 'Server error' });
+    console.error("Error in searchStores:", error);
+    res.status(500).json({ error: 'Server error', details: error.message });
   }
 };
 
@@ -49,7 +51,7 @@ exports.searchStores = async (req, res) => {
 exports.getStores = async (req, res) => {
   try {
     const store = await Store.findByPk(req.params.id);
-    if (!store) return res.status(404).json({ error: 'Store not found' });
+    if (!store) return res.status(404).json({ error: 'Store not found.....' });
     res.json(store);
   } catch (error) {
     res.status(500).json({ error: 'Server error' });
