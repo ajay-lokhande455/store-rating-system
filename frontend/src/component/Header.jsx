@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FaSearch, FaUser, FaSignOutAlt, FaPager, FaBars, FaTimes, FaStore, FaUsers } from "react-icons/fa";
-import Login from "./Login";
-import Signup from "./Signup";
+import Login from "../component/Login";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../features/authSlice";
 import { searchStores } from "../features/storeSlice";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Signup from "../component/SignUp";
 
 const Header = () => {
   const [modal, setModal] = useState(null);
