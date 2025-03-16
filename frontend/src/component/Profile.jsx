@@ -12,7 +12,7 @@ const Profile = () => {
         <div className="space-y-4">
           <div className="border-b pb-2">
             <label className="text-gray-500 text-sm">User ID</label>
-            <p className="text-lg font-medium">{user?._id}</p>
+            <p className="text-sm font-medium">{user?.id}</p>
           </div>
 
           <div className="border-b pb-2">

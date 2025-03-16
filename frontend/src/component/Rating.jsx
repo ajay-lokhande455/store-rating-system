@@ -14,6 +14,7 @@ const storeDetails = {
 const Rating = () => {
   const { id } = useParams();
   const [userRating, setUserRating] = useState(null);
+  const [review, setReview] = useState("");
   const [submitted, setSubmitted] = useState(false);
 
   const handleRatingSubmit = (rating) => {
@@ -22,7 +23,7 @@ const Rating = () => {
 
   const handleSubmit = () => {
     setSubmitted(true);
-    alert(`Thank you for your rating: ${userRating} ★`);
+    alert(`Thank you for your rating: ${userRating} ★\nReview: ${review}`);
   };
 
   return (
@@ -63,12 +64,21 @@ const Rating = () => {
           ))}
         </div>
 
+        {/* Review Textarea */}
+        <textarea
+          className="w-full border p-2 mt-4 rounded"
+          rows="3"
+          placeholder="Write your review here..."
+          value={review}
+          onChange={(e) => setReview(e.target.value)}
+        ></textarea>
+
         {!submitted ? (
           <button
             onClick={handleSubmit}
-            disabled={userRating === null}
-            className={`mt-4 px-6 py-2  text-white font-semibold transition ${
-              userRating
+            disabled={userRating === null || review.trim() === ""}
+            className={`mt-4 px-6 py-2 text-white font-semibold transition ${
+              userRating && review.trim()
                 ? "bg-black hover:bg-gray-700"
                 : "bg-gray-400 cursor-not-allowed"
             }`}
@@ -78,14 +88,22 @@ const Rating = () => {
         ) : (
           <button
             onClick={() => setSubmitted(false)}
-            className="mt-4 px-6 py-2  bg-amber-500 text-white font-semibold hover:bg-amber-600 transition"
+            className="mt-4 px-6 py-2 bg-amber-500 text-white font-semibold hover:bg-amber-600 transition"
           >
             Modify Your Rating
           </button>
         )}
 
         {submitted && (
-          <p className="text-green-500 mt-2">Thank you for your rating: {userRating} ★</p>
+          <div className="mt-4 p-4 bg-gray-100 rounded shadow-sm">
+            <p className="text-green-500 text-lg">Thank you for your feedback!</p>
+            <p className="text-gray-700 mt-2">
+              <strong>Your Rating:</strong> {userRating} ★
+            </p>
+            <p className="text-gray-700 mt-2">
+              <strong>Your Review:</strong> {review}
+            </p>
+          </div>
         )}
       </div>
     </div>

@@ -1,39 +1,19 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import { FaStar } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
-
-const stores = [
-  {
-    id: 1,
-    name: "Store One",
-    owner: "Lyudmila Regetci",
-    address: "123 Main St, Cityville",
-    image:
-      "https://imgs.search.brave.com/US2ZKToTB2iPCdJCSOWNRtmUgJ2wo5HXUey4iH6ydeY/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5nZXR0eWltYWdl/cy5jb20vaWQvMTMy/OTM4NDYxNS9waG90/by9zYWxlc3dvbWFu/LXNob3dpbmctYS1u/ZXctbW9iaWxlLXBo/b25lLXRvLWhlci1j/b2xsZWFndWUuanBn/P3M9NjEyeDYxMiZ3/PTAmaz0yMCZjPWo4/blBZT2xPZW9QMmJM/NmtacE5MREF0dGxu/bFVPM3llazNRUDZE/bzUxMGc9",
-    rating: 5,
-  },
-  {
-    id: 2,
-    name: "Store Two",
-    owner: "John Doe",
-    address: "456 Elm St, Townsville",
-    image:
-      "https://imgs.search.brave.com/US2ZKToTB2iPCdJCSOWNRtmUgJ2wo5HXUey4iH6ydeY/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5nZXR0eWltYWdl/cy5jb20vaWQvMTMy/OTM4NDYxNS9waG90/by9zYWxlc3dvbWFu/LXNob3dpbmctYS1u/ZXctbW9iaWxlLXBo/b25lLXRvLWhlci1j/b2xsZWFndWUuanBn/P3M9NjEyeDYxMiZ3/PTAmaz0yMCZjPWo4/blBZT2xPZW9QMmJM/NmtacE5MREF0dGxu/bFVPM3llazNRUDZE/bzUxMGc9",
-    rating: 4,
-  },
-  {
-    id: 3,
-    name: "Store Three",
-    owner: "Jane Smith",
-    address: "789 Pine St, Villageton",
-    image:
-      "https://imgs.search.brave.com/c-0xkBwqV6aGyVy3nHIEJ7jhhTQ3GTOV0tEVyHVjozM/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5nZXR0eWltYWdl/cy5jb20vaWQvNjA4/MTY2NzcxL3Bob3Rv/L3dvbWFuLXNob3dp/bmctc2hvcC1vd25l/ci1waG90b3Mtb24t/c21hcnRwaG9uZS5q/cGc_cz02MTJ4NjEy/Jnc9MCZrPTIwJmM9/TUNMeTZqclhrLUJ6/VHlTNXZJWXFiYUF4/d21mNDRmY08xUmRG/UkM2V0hvQT0",
-    rating: 5,
-  },
-];
+import { useDispatch, useSelector } from "react-redux";
+import { fetchStores } from "../features/storeSlice";
 
 const StoreCard = () => {
- 
+  const dispatch = useDispatch();
+  const { stores, status, error } = useSelector((state) => state.stores);
+
+  useEffect(() => {
+    dispatch(fetchStores());
+  }, [dispatch]);
+
+  if (status === "loading") return <p>Loading stores...</p>;
+  if (error) return <p>Error: {error}</p>;
+
   return (
     <div className="w-full px-6 md:px-12 lg:px-24 py-14">
       <h1 className="text-4xl md:text-5xl font-bold text-gray-900">
@@ -66,9 +46,7 @@ const StoreCard = () => {
                 ))}
               </div>
 
-              <button
-                className="mt-3 bg-red-500 text-white px-4 py-2  hover:bg-red-600 transition-all"
-              >
+              <button className="mt-3 bg-red-500 text-white px-4 py-2  hover:bg-red-600 transition-all">
                 Give Rating
               </button>
             </div>

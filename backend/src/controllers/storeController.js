@@ -21,6 +21,16 @@ exports.getStores = async (req, res) => {
     res.status(500).json({ error: 'Server error' });
   }
 };
+
+exports.getAllStores = async (req, res) => {
+  try {
+    const stores = await Store.findAll({ include: [{ model: User, as: 'owner' }] });
+    res.json(stores);
+  } catch (error) {
+    res.status(500).json({ error: 'Server error' });
+  }
+};
+
 exports.searchStores = async (req, res) => {
   try {
     const { query } = req.query; 

@@ -1,8 +1,6 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { FaUser, FaStar, FaEdit } from "react-icons/fa";
+import { FaUser, FaEdit } from "react-icons/fa";
 import Profile from "../component/Profile";
-import UpdateRating from "../component/UpdetRating";
 import EditUser from "../component/EditUser";
 
 const MyAccountPage = () => {
@@ -24,14 +22,6 @@ const MyAccountPage = () => {
           </li>
           <li>
             <button 
-              className={`flex items-center gap-2 p-2 w-full text-left  ${activeTab === "rating" ? "bg-gray-200" : ""}`}
-              onClick={() => setActiveTab("rating")}
-            >
-              <FaStar /> Gived Rating
-            </button>
-          </li>
-          <li>
-            <button 
               className={`flex items-center gap-2 p-2 w-full text-left  ${activeTab === "edit" ? "bg-gray-200" : ""}`}
               onClick={() => setActiveTab("edit")}
             >
@@ -43,8 +33,6 @@ const MyAccountPage = () => {
 
       <div className="flex-1 p-6">
         {activeTab === "profile" && <Profile />}
-        {activeTab === "rating" && <UpdateRating />}
-
         {activeTab === "edit" && <EditUser />}
       </div>
     </div>
