@@ -2,18 +2,21 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { FaStar } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchStoreById } from "../features/storeSlice"; // Adjust path based on your project structure
+import { fetchStoreById } from "../features/storeSlice";
+import { submitRating } from "../features/ratingSlice"; // Import the submitRating action
 
 const Rating = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const { selectedStore: storeDetails, loading, error } = useSelector((state) => state.stores);
+  const { loading: ratingLoading, error: ratingError } = useSelector((state) => state.rating);
+
   const [userRating, setUserRating] = useState(null);
   const [review, setReview] = useState("");
   const [submitted, setSubmitted] = useState(false);
 
   useEffect(() => {
-    dispatch(fetchStoreById(id)); 
+    dispatch(fetchStoreById(id));
   }, [dispatch, id]);
 
   const handleRatingSubmit = (rating) => {
@@ -21,8 +24,17 @@ const Rating = () => {
   };
 
   const handleSubmit = () => {
-    setSubmitted(true);
-    alert(`Thank you for your rating: ${userRating} ★\nReview: ${review}`);
+    if (userRating && review.trim()) {
+      dispatch(
+        submitRating({
+          user_id: 1, 
+          store_id: id,
+          rating: userRating,
+          description: review,
+        })
+      );
+      setSubmitted(true);
+    }
   };
 
   if (loading) return <p>Loading store details...</p>;
@@ -31,7 +43,6 @@ const Rating = () => {
 
   return (
     <div className="w-full px-4 sm:px-8 md:px-12 lg:px-24 py-10 flex flex-col md:flex-row gap-6">
-      {/* Image Section */}
       <div className="md:w-1/2 flex justify-center">
         <img
           src={storeDetails.image}
@@ -53,7 +64,6 @@ const Rating = () => {
 
         <div className="w-full border-t border-gray-300 my-6"></div>
 
-        {/* Rating Section */}
         <h2 className="text-2xl font-semibold text-gray-900">Rate This Store</h2>
         <div className="flex items-center mt-4 space-x-2">
           {[...Array(5)].map((_, i) => (
@@ -67,7 +77,6 @@ const Rating = () => {
           ))}
         </div>
 
-        {/* Review Textarea */}
         <textarea
           className="w-full border p-2 mt-4 rounded"
           rows="3"
@@ -79,14 +88,14 @@ const Rating = () => {
         {!submitted ? (
           <button
             onClick={handleSubmit}
-            disabled={userRating === null || review.trim() === ""}
+            disabled={userRating === null || review.trim() === "" || ratingLoading}
             className={`mt-4 px-6 py-2 text-white font-semibold transition ${
               userRating && review.trim()
                 ? "bg-black hover:bg-gray-700"
                 : "bg-gray-400 cursor-not-allowed"
             }`}
           >
-            Submit Rating
+            {ratingLoading ? "Submitting..." : "Submit Rating"}
           </button>
         ) : (
           <button
@@ -96,6 +105,8 @@ const Rating = () => {
             Modify Your Rating
           </button>
         )}
+
+        {ratingError && <p className="text-red-500 mt-2">{ratingError}</p>}
 
         {submitted && (
           <div className="mt-4 p-4 bg-gray-100 rounded shadow-sm">

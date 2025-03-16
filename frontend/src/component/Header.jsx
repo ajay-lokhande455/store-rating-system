@@ -72,7 +72,6 @@ const Header = () => {
       <nav className="flex items-center gap-10">
         <ul className="flex gap-10 text-gray-500 text-sm">
           <li className="hover:text-black cursor-pointer"><Link to="/stores">STORES</Link></li>
-          <li className="hover:text-black cursor-pointer"><Link to="/rating">RATING</Link></li>
           <li className="hover:text-black cursor-pointer"><Link to="/contact">CONTACT</Link></li>
         </ul>
 
