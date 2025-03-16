@@ -22,7 +22,7 @@ export const fetchStores = createAsyncThunk('stores/fetchStores', async (_, { re
 
 export const searchStores = createAsyncThunk('stores/searchStores', async (query, { rejectWithValue }) => {
   try {
-    const response = await axios.get(`${BASE_URL}/search?query=${query}`);
+    const response = await axios.get(`${BASE_URL}/search?query=${query}`, { headers: getAuthHeaders() });
     return response.data;
   } catch (error) {
     return rejectWithValue(error.response?.data?.message || "An error occurred");
