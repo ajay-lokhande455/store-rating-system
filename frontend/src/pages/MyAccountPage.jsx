@@ -7,14 +7,14 @@ const MyAccountPage = () => {
   const [activeTab, setActiveTab] = useState("profile");
 
   return (
-    <div className="flex  bg-gray-100">
+    <div className="flex flex-col md:flex-row min-h-screen bg-gray-100">
       {/* Sidebar */}
-      <div className="w-64 bg-white shadow-md p-5">
-        <h2 className="text-xl font-semibold mb-6">My Account</h2>
-        <ul className="space-y-4">
+      <div className="w-full md:w-64 bg-white shadow-md p-5 md:h-screen flex md:flex-col md:justify-start justify-between items-center md:items-start">
+        <h2 className="text-xl font-semibold mb-6 hidden md:block">My Account</h2>
+        <ul className="space-y-4 w-full">
           <li>
             <button 
-              className={`flex items-center gap-2 p-2 w-full text-left  ${activeTab === "profile" ? "bg-gray-200" : ""}`}
+              className={`flex items-center gap-2 p-2 w-full text-left rounded-md ${activeTab === "profile" ? "bg-gray-200" : ""}`}
               onClick={() => setActiveTab("profile")}
             >
               <FaUser /> My Profile
@@ -22,7 +22,7 @@ const MyAccountPage = () => {
           </li>
           <li>
             <button 
-              className={`flex items-center gap-2 p-2 w-full text-left  ${activeTab === "edit" ? "bg-gray-200" : ""}`}
+              className={`flex items-center gap-2 p-2 w-full text-left rounded-md ${activeTab === "edit" ? "bg-gray-200" : ""}`}
               onClick={() => setActiveTab("edit")}
             >
               <FaEdit /> Edit User Details
@@ -31,13 +31,13 @@ const MyAccountPage = () => {
         </ul>
       </div>
 
-      <div className="flex-1 p-6">
+      {/* Content */}
+      <div className="flex-1 p-6 w-full">
         {activeTab === "profile" && <Profile />}
         {activeTab === "edit" && <EditUser />}
       </div>
     </div>
   );
 };
-
 
 export default MyAccountPage;

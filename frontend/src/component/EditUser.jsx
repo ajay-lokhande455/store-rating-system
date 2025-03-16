@@ -37,7 +37,7 @@ const EditUser = () => {
 
   const handleProfileUpdate = (e) => {
     e.preventDefault();
-    dispatch(updateUser({ id: user._id, userData: formData }));
+    dispatch(updateUser({ id: user.id, userData: formData }));
   };
 
   const handlePasswordUpdate = (e) => {

@@ -26,9 +26,8 @@ export const fetchAllUsers = createAsyncThunk("auth/fetchAllUsers", async (_, { 
 // Fetch user
 export const fetchUser = createAsyncThunk("auth/fetchUser", async (id, { rejectWithValue }) => {
   try {
-    const token = getToken();
     const response = await axios.get(`${API_URL}/${id}`, {
-      headers: { Authorization: `Bearer ${token}` },
+      headers: getAuthHeaders() ,
     });
     return response.data;
   } catch (error) {
@@ -39,9 +38,8 @@ export const fetchUser = createAsyncThunk("auth/fetchUser", async (id, { rejectW
 // Update user
 export const updateUser = createAsyncThunk("auth/updateUser", async ({ id, userData }, { rejectWithValue }) => {
   try {
-    const token = getToken();
     const response = await axios.put(`${API_URL}/${id}`, userData, {
-      headers: { Authorization: `Bearer ${token}` },
+      headers: getAuthHeaders() ,
     });
     toast.success("Profile updated successfully!");
     return response.data;
@@ -54,11 +52,10 @@ export const updateUser = createAsyncThunk("auth/updateUser", async ({ id, userD
 // Update password
 export const updatePassword = createAsyncThunk("auth/updatePassword", async ({ oldPassword, newPassword }, { rejectWithValue }) => {
   try {
-    const token = getToken();
     const response = await axios.put(
       `${API_URL}/update-password`,
       { oldPassword, newPassword },
-      { headers: { Authorization: `Bearer ${token}` } }
+      { headers: getAuthHeaders()  }
     );
     toast.success("Password updated successfully!");
     return response.data;
@@ -71,9 +68,8 @@ export const updatePassword = createAsyncThunk("auth/updatePassword", async ({ o
 // Delete user
 export const deleteUser = createAsyncThunk("auth/deleteUser", async (id, { rejectWithValue }) => {
   try {
-    const token = getToken();
     await axios.delete(`${API_URL}/${id}`, {
-      headers: { Authorization: `Bearer ${token}` },
+      headers: getAuthHeaders() ,
     });
     toast.success("User deleted successfully!");
     return id;
@@ -131,7 +127,6 @@ const userSlice = createSlice({
         state.user = { ...state.user, ...action.payload };
       })
       .addCase(updatePassword.fulfilled, () => {
-        toast.success("Password updated successfully!");
       })
       .addCase(deleteUser.fulfilled, (state, action) => {
         if (state.user?.id === action.payload) {
