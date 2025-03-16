@@ -36,7 +36,6 @@ const Rating = () => {
         />
       </div>
 
-      {/* Store Info Section */}
       <div className="md:w-1/2">
         <h1 className="text-3xl md:text-4xl font-bold text-gray-900">
           {storeDetails.name}

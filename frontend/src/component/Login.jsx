@@ -1,10 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { login } from "../features/authSlice";
 
 const Login = ({ onClose, onSignup }) => {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const {token} = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    if (token) navigate("/");
+  }, [token, navigate]);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -13,6 +21,14 @@ const Login = ({ onClose, onSignup }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
+
+    try {
+      await dispatch(login(formData)).unwrap();
+      navigate("/");
+      onClose(); 
+    } catch (err) {
+      setError(err.response?.data?.message || "Invalid credentials");
+    }
   };
 
   return (
@@ -27,7 +43,7 @@ const Login = ({ onClose, onSignup }) => {
 
         <h2 className="text-2xl font-bold text-center text-gray-800">Login</h2>
         {error && <p className="text-red-500 text-center mt-2">{error}</p>}
-        
+
         <form onSubmit={handleSubmit} className="mt-4">
           <div className="mb-4">
             <label className="block text-gray-700 font-medium">Email</label>
@@ -63,7 +79,7 @@ const Login = ({ onClose, onSignup }) => {
           Don't have an account?{" "}
           <span
             className="text-blue-500 cursor-pointer"
-            onClick={onSignup} // Open Sign Up modal
+            onClick={onSignup} 
           >
             Sign up here
           </span>
