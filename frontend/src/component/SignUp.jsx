@@ -1,5 +1,9 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { signup } from "../features/authSlice";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Signup = ({ onClose }) => {
   const [formData, setFormData] = useState({
@@ -10,8 +14,10 @@ const Signup = ({ onClose }) => {
     role: "user",
   });
 
-  const [error, setError] = useState("");
+  const [err, setErr] = useState("");
+  const { status, error } = useSelector((state) => state.auth);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -19,7 +25,14 @@ const Signup = ({ onClose }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError("");
+    try {
+      await dispatch(signup(formData)).unwrap();
+      onClose();
+      toast.success("Signup successful! Please log in to your account");
+    } catch (error) {
+      setErr(error);
+      toast.error("Signup failed! " + error);
+    }
   };
 
   return (
@@ -37,7 +50,7 @@ const Signup = ({ onClose }) => {
         <h2 className="text-2xl font-bold text-center text-gray-800">
           Sign Up
         </h2>
-        {error && <p className="text-red-500 text-center mt-2">{error}</p>}
+        {err && <p className="text-red-500 text-center mt-2">{err}</p>}
 
         <form onSubmit={handleSubmit} className="mt-4">
           <div className="mb-4">

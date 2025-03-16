@@ -4,6 +4,7 @@ import { Navigation, Pagination, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
+import { useNavigate } from "react-router-dom";
 
 const images = [
     "https://imgs.search.brave.com/tf9EqN3WcKRxE5qTGLOOuo57kc9-9enAZ8b43vpcUbY/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9idXJz/dC5zaG9waWZ5Y2Ru/LmNvbS9waG90b3Mv/cGhvbmUtdGFraW5n/LXBob3RvLW9mLW11/c2V1bS5qcGc_d2lk/dGg9MTAwMCZmb3Jt/YXQ9cGpwZyZleGlm/PTAmaXB0Yz0w",
@@ -12,6 +13,7 @@ const images = [
   ];
 
 const Slider = () => {
+  const navigate = useNavigate();
   return (
     <div className="relative w-full h-[70vh]">
       <Swiper
@@ -38,7 +40,7 @@ const Slider = () => {
               <p className="text-sm sm:text-lg md:text-xl mt-2">
                 Discover amazing places and share your experience.
               </p>
-              <button className="mt-4 px-4 py-2 sm:px-6 sm:py-3 bg-white text-black font-semibold hover:bg-gray-300 transition text-sm sm:text-base">
+              <button onClick={() => navigate("/stores")} className="mt-4 px-4 py-2 sm:px-6 sm:py-3 bg-white text-black font-semibold hover:bg-gray-300 transition text-sm sm:text-base">
                 Explore Now
               </button>
             </div>

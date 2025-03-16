@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-// Base API URL (Change it based on your backend)
+// Base API URL
 const API_URL = "https://store-rating-system.onrender.com/api/auth";
 
 // Async thunk for user signup
@@ -18,25 +18,34 @@ export const signup = createAsyncThunk("auth/signup", async (userData, { rejectW
 export const login = createAsyncThunk("auth/login", async (userData, { rejectWithValue }) => {
     try {
         const response = await axios.post(`${API_URL}/login`, userData);
-        localStorage.setItem("token", response.data.token); // Store token in localStorage
+        
+        // Store token and user data in localStorage
+        localStorage.setItem("token", response.data.token);
+        localStorage.setItem("user", JSON.stringify(response.data.user));
+        
         return response.data;
     } catch (error) {
         return rejectWithValue(error.response.data);
     }
 });
 
-// Async thunk for logout (just clearing the token)
+// Async thunk for logout
 export const logout = createAsyncThunk("auth/logout", async () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("user");
     return null;
 });
+
+// Load user data from localStorage
+const storedUser = localStorage.getItem("user");
+const storedToken = localStorage.getItem("token");
 
 // Auth Slice
 const authSlice = createSlice({
     name: "auth",
     initialState: {
-        user: null,
-        token: localStorage.getItem("token") || null,
+        user: storedUser ? JSON.parse(storedUser) : null,
+        token: storedToken || null,
         status: "idle",
         error: null,
     },
@@ -49,13 +58,10 @@ const authSlice = createSlice({
             .addCase(signup.fulfilled, (state, action) => {
                 state.status = "succeeded";
                 state.user = action.payload.user;
-                
-                
             })
             .addCase(signup.rejected, (state, action) => {
-                state.status = "failed";
+                state.status = action.payload.error;
                 state.error = action.payload;
-               
             })
             .addCase(login.pending, (state) => {
                 state.status = "loading";
@@ -63,7 +69,9 @@ const authSlice = createSlice({
             .addCase(login.fulfilled, (state, action) => {
                 state.status = "succeeded";
                 state.token = action.payload.token;
-                console.log(action.payload);
+                state.user = action.payload.user;
+
+                console.log("User logged in:", action.payload.user);
             })
             .addCase(login.rejected, (state, action) => {
                 state.status = "failed";
@@ -76,4 +84,4 @@ const authSlice = createSlice({
     }
 });
 
-export const authReducer =  authSlice.reducer;
+export const authReducer = authSlice.reducer;

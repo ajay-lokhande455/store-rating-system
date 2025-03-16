@@ -2,13 +2,15 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { login } from "../features/authSlice";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css"; // Import toast styles
 
 const Login = ({ onClose, onSignup }) => {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const {token} = useSelector((state) => state.auth);
+  const { token } = useSelector((state) => state.auth);
 
   useEffect(() => {
     if (token) navigate("/");
@@ -23,11 +25,16 @@ const Login = ({ onClose, onSignup }) => {
     setError("");
 
     try {
-      await dispatch(login(formData)).unwrap();
-      navigate("/");
-      onClose(); 
+      if (!token) {
+        await dispatch(login(formData)).unwrap();
+        toast.success("Login successful!"); // 🎉 Success toast
+        onClose();
+        navigate("/");
+      }
     } catch (err) {
-      setError(err.response?.data?.message || "Invalid credentials");
+      const errorMsg = err.response?.data?.message || "Invalid credentials";
+      setError(errorMsg);
+      toast.error(errorMsg); // ❌ Error toast
     }
   };
 

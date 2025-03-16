@@ -53,3 +53,22 @@ exports.deleteUser = async (req, res) => {
     res.status(500).json({ error: 'Server error' });
   }
 };
+
+exports.updateUser = async (req, res) => {
+  try {
+    const { name, email, address, role } = req.body;
+    const user = await User.findByPk(req.params.id);
+    if (!user) return res.status(404).json({ error: 'User not found' });
+    user.name = name;
+    user.email = email;
+
+
+    if (address) user.address = address;
+    if (role) user.role = role;
+    await user.save();
+
+  }
+  catch(error){
+    res.status(500).json({ error: 'Server error' });
+  }
+}
