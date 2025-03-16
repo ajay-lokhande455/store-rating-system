@@ -16,15 +16,17 @@ export const submitRating = createAsyncThunk(
   'ratings/submitRating',
   async (ratingData, { rejectWithValue }) => {
     try {
-        console.log(ratingData);
         
       const response = await axios.post(`${BASE_URL}/submit`, ratingData, {
         headers: getAuthHeaders(),
       });
+      
       return response.data;
+      
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || 'An error occurred');
     }
+    
   }
 );
 
