@@ -14,11 +14,12 @@ const Rating = () => {
   const [userRating, setUserRating] = useState(null);
   const [review, setReview] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const [alertMessage, setAlertMessage] = useState(null);
   const { user } = useSelector((state) => state.auth);
 
   useEffect(() => {
     dispatch(fetchStoreById(id));
-    dispatch(getRatingsByStore(id));
+    // dispatch(getRatingsByStore(id));
   }, [dispatch, id]);
 
   const handleRatingSubmit = (rating) => {
@@ -36,7 +37,12 @@ const Rating = () => {
         })
       );
       setSubmitted(true);
-      dispatch(getRatingsByStore(id)); // Refresh ratings after submission
+      setAlertMessage("Thank you for your feedback! Your rating has been submitted.");
+      
+      // Hide alert after 3 seconds
+      setTimeout(() => setAlertMessage(null), 3000);
+
+      // dispatch(getRatingsByStore(id));
     }
   };
 
@@ -97,6 +103,13 @@ const Rating = () => {
           >
             Modify Your Rating
           </button>
+        )}
+
+        {/* Success Alert Message */}
+        {alertMessage && (
+          <div className="mt-4 px-4 py-2 bg-green-100 text-green-700 border border-green-400 rounded">
+            {alertMessage}
+          </div>
         )}
       </div>
     </div>

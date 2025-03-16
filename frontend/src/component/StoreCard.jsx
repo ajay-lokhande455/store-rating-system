@@ -14,7 +14,7 @@ const StoreCard = () => {
   }, [dispatch]);
 
   if (status === "loading") return <p>Loading stores...</p>;
-  if (error) return <p>Error: {error}</p>;
+  // if (error) return <p>Error: {error}</p>;
 
   return (
     <div className="w-full px-6 md:px-12 lg:px-24 py-14">

@@ -26,7 +26,9 @@ const Header = () => {
 
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value);
-    dispatch(searchStores(e.target.value)); 
+    if (e.target.value.trim()) {
+      dispatch(searchStores(e.target.value));
+    }
   };
 
   return (
@@ -52,6 +54,7 @@ const Header = () => {
           <li className="hover:text-black cursor-pointer">
             <Link to="/stores">STORES</Link>
           </li>
+
           <li className="hover:text-black cursor-pointer">
             <Link to="/contact">CONTACT</Link>
           </li>

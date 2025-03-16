@@ -11,11 +11,13 @@ const getAuthHeaders = () => {
   };
 };
 
-// Submit a new rating
+
 export const submitRating = createAsyncThunk(
   'ratings/submitRating',
   async (ratingData, { rejectWithValue }) => {
     try {
+        console.log(ratingData);
+        
       const response = await axios.post(`${BASE_URL}/submit`, ratingData, {
         headers: getAuthHeaders(),
       });
@@ -26,7 +28,6 @@ export const submitRating = createAsyncThunk(
   }
 );
 
-// Fetch ratings for a specific store
 export const getRatingsByStore = createAsyncThunk(
   'ratings/getRatingsByStore',
   async (storeId, { rejectWithValue }) => {
