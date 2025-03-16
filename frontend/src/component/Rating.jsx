@@ -1,4 +1,4 @@
-import React, { use, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { FaStar } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
@@ -10,11 +10,11 @@ const Rating = () => {
   const dispatch = useDispatch();
   const { selectedStore: storeDetails, loading, error } = useSelector((state) => state.stores);
   const { ratings, loading: ratingLoading, error: ratingError } = useSelector((state) => state.rating);
-  const { user } = useSelector((state) => state.auth);
 
   const [userRating, setUserRating] = useState(null);
   const [review, setReview] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const { user } = useSelector((state) => state.auth);
 
   useEffect(() => {
     dispatch(fetchStoreById(id));
@@ -97,31 +97,6 @@ const Rating = () => {
           >
             Modify Your Rating
           </button>
-        )}
-
-        {ratingError && <p className="text-red-500 mt-2">{ratingError}</p>}
-
-        {submitted && (
-          <div className="mt-4 p-4 bg-gray-100 rounded shadow-sm">
-            <p className="text-green-500 text-lg">Thank you for your feedback!</p>
-            <p className="text-gray-700 mt-2"><strong>Your Rating:</strong> {userRating} ★</p>
-            <p className="text-gray-700 mt-2"><strong>Your Review:</strong> {review}</p>
-          </div>
-        )}
-
-        <div className="w-full border-t border-gray-300 my-6"></div>
-        <h2 className="text-2xl font-semibold text-gray-900">Customer Reviews</h2>
-        {ratings.length > 0 ? (
-          <ul className="mt-4">
-            {ratings.map((r, index) => (
-              <li key={index} className="bg-gray-100 p-3 rounded shadow-sm mt-2">
-                <p className="text-gray-900 font-semibold">Rating: {r.rating} ★</p>
-                <p className="text-gray-700">{r.description}</p>
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p className="text-gray-500 mt-2">No reviews yet. Be the first to review!</p>
         )}
       </div>
     </div>

@@ -31,7 +31,7 @@ export const getRatingsByStore = createAsyncThunk(
   'ratings/getRatingsByStore',
   async (storeId, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`${BASE_URL}/store/${storeId}`, {
+      const response = await axios.get(`${BASE_URL}/${storeId}`, {
         headers: getAuthHeaders(),
       });
       return response.data;
@@ -64,6 +64,7 @@ const ratingsSlice = createSlice({
       .addCase(submitRating.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
+        console.log(action.payload);
       })
       .addCase(getRatingsByStore.pending, (state) => {
         state.loading = true;
