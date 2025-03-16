@@ -3,27 +3,26 @@ import axios from 'axios';
 
 const BASE_URL = 'https://store-rating-system.onrender.com/api/stores';
 
+const getAuthHeaders = () => {
+  const token = localStorage.getItem('token');
+  return { 
+    'Content-Type': 'application/json',
+    Authorization: `Bearer ${token}`
+  };
+};
+
 export const fetchStores = createAsyncThunk('stores/fetchStores', async (_, { rejectWithValue }) => {
-    try {
-      const token = localStorage.getItem('token');
-  
-      const response = await axios.get(`${BASE_URL}/all`, {
-        headers: { 
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`
-        }
-      });
-  
-      return response.data;
-    } catch (error) {
-      return rejectWithValue(error.response?.data?.message || "An error occurred");
-    }
-  });
-  
+  try {
+    const response = await axios.get(`${BASE_URL}/all`, { headers: getAuthHeaders() });
+    return response.data;
+  } catch (error) {
+    return rejectWithValue(error.response?.data?.message || "An error occurred");
+  }
+});
 
 export const searchStores = createAsyncThunk('stores/searchStores', async (query, { rejectWithValue }) => {
   try {
-    const response = await axios.get(`${BASE_URL}/search?query=${query}`);
+    const response = await axios.get(`${BASE_URL}/search?query=${query}`, { headers: getAuthHeaders() });
     return response.data;
   } catch (error) {
     return rejectWithValue(error.response?.data?.message || "An error occurred");
@@ -32,8 +31,17 @@ export const searchStores = createAsyncThunk('stores/searchStores', async (query
 
 export const createStore = createAsyncThunk('stores/createStore', async (storeData, { rejectWithValue }) => {
   try {
-    const response = await axios.post(`${BASE_URL}/create`, storeData);
+    const response = await axios.post(`${BASE_URL}/create`, storeData, { headers: getAuthHeaders() });
     return response.data.store;
+  } catch (error) {
+    return rejectWithValue(error.response?.data?.message || "An error occurred");
+  }
+});
+
+export const fetchStoreById = createAsyncThunk('stores/fetchStoreById', async (storeId, { rejectWithValue }) => {
+  try {
+    const response = await axios.get(`${BASE_URL}/${storeId}`, { headers: getAuthHeaders() });
+    return response.data;
   } catch (error) {
     return rejectWithValue(error.response?.data?.message || "An error occurred");
   }
@@ -43,6 +51,7 @@ const storeSlice = createSlice({
   name: 'stores',
   initialState: {
     stores: [],
+    selectedStore: null,
     loading: false,
     error: null,
   },
@@ -82,6 +91,18 @@ const storeSlice = createSlice({
         state.stores.push(action.payload);
       })
       .addCase(createStore.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase(fetchStoreById.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchStoreById.fulfilled, (state, action) => {
+        state.loading = false;
+        state.selectedStore = action.payload;
+      })
+      .addCase(fetchStoreById.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       });

@@ -1,16 +1,20 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { FaStar } from "react-icons/fa";
-
-
+import { useDispatch, useSelector } from "react-redux";
+import { fetchStoreById } from "../features/storeSlice"; // Adjust path based on your project structure
 
 const Rating = () => {
   const { id } = useParams();
+  const dispatch = useDispatch();
+  const { selectedStore: storeDetails, loading, error } = useSelector((state) => state.stores);
   const [userRating, setUserRating] = useState(null);
   const [review, setReview] = useState("");
   const [submitted, setSubmitted] = useState(false);
 
-  
+  useEffect(() => {
+    dispatch(fetchStoreById(id)); 
+  }, [dispatch, id]);
 
   const handleRatingSubmit = (rating) => {
     setUserRating(rating);
@@ -21,6 +25,10 @@ const Rating = () => {
     alert(`Thank you for your rating: ${userRating} ★\nReview: ${review}`);
   };
 
+  if (loading) return <p>Loading store details...</p>;
+  if (error) return <p className="text-red-500">{error}</p>;
+  if (!storeDetails) return <p>Store not found.</p>;
+
   return (
     <div className="w-full px-4 sm:px-8 md:px-12 lg:px-24 py-10 flex flex-col md:flex-row gap-6">
       {/* Image Section */}
@@ -28,7 +36,7 @@ const Rating = () => {
         <img
           src={storeDetails.image}
           alt={storeDetails.name}
-          className="w-full max-w-sm md:max-w-md  shadow-md"
+          className="w-full max-w-sm md:max-w-md shadow-md"
         />
       </div>
 
@@ -40,7 +48,7 @@ const Rating = () => {
           Address: {storeDetails.address}
         </p>
         <p className="text-lg md:text-xl text-gray-500 mt-2">
-          Overall Rating: {storeDetails.overallRating} ★
+          Overall Rating: {storeDetails.total_ratings} +
         </p>
 
         <div className="w-full border-t border-gray-300 my-6"></div>
