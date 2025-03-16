@@ -1,6 +1,6 @@
 
 const express = require('express');
-const { createStore, getStores, searchStores, getAllStores } = require('../controllers/storeController');
+const { createStore, getAllStores, getStores, searchStores } = require('../controllers/storeController');
 const authMiddleware = require('../middleware/authMiddleware');
 
 const router = express.Router();

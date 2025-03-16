@@ -2,10 +2,12 @@ import React, { useEffect } from "react";
 import { FaStar } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchStores } from "../features/storeSlice";
+import { Link } from "react-router-dom";
 
 const StoreCard = () => {
   const dispatch = useDispatch();
   const { stores, status, error } = useSelector((state) => state.stores);
+  
 
   useEffect(() => {
     dispatch(fetchStores());
@@ -24,9 +26,13 @@ const StoreCard = () => {
       </p>
 
       <div className="w-full border-t border-gray-300 my-10"></div>
+
+     
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 py-10">
         {stores.map((store) => (
-          <div key={store.id} className="bg-black w-full max-w-sm mx-auto  ">
+          <Link to={`/rating/${store.id}`}>
+          <div key={store.id
+          } className="bg-black w-full max-w-sm mx-auto  ">
             <img
               src={store.image}
               alt={store.name}
@@ -37,13 +43,12 @@ const StoreCard = () => {
               <p className="text-gray-300">{store.owner}</p>
               <p className="text-gray-400">{store.address}</p>
 
-              <div className="flex items-center mt-2">
+              <div className="flex items-center mt-2 text-white">
                 <span className="text-yellow-400 font-semibold mr-2">
                   Overall Rating:
                 </span>
-                {[...Array(store.rating)].map((_, i) => (
-                  <FaStar key={i} className="text-yellow-500" />
-                ))}
+                <p className="text-white">{store.total_ratings
+                }+</p>
               </div>
 
               <button className="mt-3 bg-red-500 text-white px-4 py-2  hover:bg-red-600 transition-all">
@@ -51,6 +56,7 @@ const StoreCard = () => {
               </button>
             </div>
           </div>
+          </Link>
         ))}
       </div>
     </div>

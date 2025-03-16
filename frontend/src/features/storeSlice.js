@@ -1,35 +1,41 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-const BASE_URL = 'http://localhost:5000/api/stores'; // Update with your backend URL
+const BASE_URL = 'https://store-rating-system.onrender.com/api/stores';
 
-// Async thunk for fetching all stores
 export const fetchStores = createAsyncThunk('stores/fetchStores', async (_, { rejectWithValue }) => {
-  try {
-    const response = await axios.get(`${BASE_URL}/all`);
-    return response.data;
-  } catch (error) {
-    return rejectWithValue(error.response.data);
-  }
-});
+    try {
+      const token = localStorage.getItem('token');
+  
+      const response = await axios.get(`${BASE_URL}/all`, {
+        headers: { 
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        }
+      });
+  
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data?.message || "An error occurred");
+    }
+  });
+  
 
-// Async thunk for searching stores
 export const searchStores = createAsyncThunk('stores/searchStores', async (query, { rejectWithValue }) => {
   try {
     const response = await axios.get(`${BASE_URL}/search?query=${query}`);
     return response.data;
   } catch (error) {
-    return rejectWithValue(error.response.data);
+    return rejectWithValue(error.response?.data?.message || "An error occurred");
   }
 });
 
-// Async thunk for creating a store
 export const createStore = createAsyncThunk('stores/createStore', async (storeData, { rejectWithValue }) => {
   try {
     const response = await axios.post(`${BASE_URL}/create`, storeData);
     return response.data.store;
   } catch (error) {
-    return rejectWithValue(error.response.data);
+    return rejectWithValue(error.response?.data?.message || "An error occurred");
   }
 });
 
@@ -43,7 +49,6 @@ const storeSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      // Fetch Stores
       .addCase(fetchStores.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -56,8 +61,6 @@ const storeSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
       })
-
-      // Search Stores
       .addCase(searchStores.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -70,8 +73,6 @@ const storeSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
       })
-
-      // Create Store
       .addCase(createStore.pending, (state) => {
         state.loading = true;
         state.error = null;

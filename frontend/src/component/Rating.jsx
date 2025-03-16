@@ -2,20 +2,15 @@ import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import { FaStar } from "react-icons/fa";
 
-const storeDetails = {
-  id: 1,
-  name: "Tech Haven",
-  address: "123 Main Street, New York, NY",
-  overallRating: 4.5,
-  image:
-    "https://imgs.search.brave.com/US2ZKToTB2iPCdJCSOWNRtmUgJ2wo5HXUey4iH6ydeY/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5nZXR0eWltYWdl/cy5jb20vaWQvMTMy/OTM4NDYxNS9waG90/by9zYWxlc3dvbWFu/LXNob3dpbmctYS1u/ZXctbW9iaWxlLXBo/b25lLXRvLWhlci1j/b2xsZWFndWUuanBn/P3M9NjEyeDYxMiZ3/PTAmaz0yMCZjPWo4/blBZT2xPZW9QMmJM/NmtacE5MREF0dGxu/bFVPM3llazNRUDZE/bzUxMGc9",
-};
+
 
 const Rating = () => {
   const { id } = useParams();
   const [userRating, setUserRating] = useState(null);
   const [review, setReview] = useState("");
   const [submitted, setSubmitted] = useState(false);
+
+  
 
   const handleRatingSubmit = (rating) => {
     setUserRating(rating);
