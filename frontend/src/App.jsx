@@ -9,6 +9,8 @@ import ContactPage from "./pages/ContactPage";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css"; // Ensure CSS is imported
 import MyAccountPage from "./pages/MyAccountPage";
+import AdminPage from "./pages/AdminPage";
+import UserList from "./component/UserList";
 
 function App() {
   return (
@@ -21,6 +23,8 @@ function App() {
           <Route path="/rating/:id" element={<RatingPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path= "/my-account" element={<MyAccountPage />} />
+          <Route path="/AdminPage" element={<AdminPage />} />
+          <Route path="/allUsers" element={<UserList />} />
         </Routes>
         <Footer />
       </Router>

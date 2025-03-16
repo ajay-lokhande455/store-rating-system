@@ -2,10 +2,26 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-const API_URL = "https://store-rating-system.onrender.com/api/auth"; // Adjust API URL
+const API_URL = "https://store-rating-system.onrender.com/api/users"; // Adjust API URL
 
-
-const getToken = () => localStorage.getItem("token");
+const getAuthHeaders = () => {
+    const token = localStorage.getItem('token');
+    return {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    };
+  };
+  
+export const fetchAllUsers = createAsyncThunk("auth/fetchAllUsers", async (_, { rejectWithValue }) => {
+  try {
+    const response = await axios.get(`${API_URL}/all`, {
+      headers: getAuthHeaders() ,
+    });
+    return response.data;
+  } catch (error) {
+    return rejectWithValue(error.response?.data || "Failed to fetch users");
+  }
+});
 
 // Fetch user
 export const fetchUser = createAsyncThunk("auth/fetchUser", async (id, { rejectWithValue }) => {
@@ -71,18 +87,34 @@ const userSlice = createSlice({
   name: "auth",
   initialState: {
     user: null,
+    users: [], 
     loading: false,
     error: null,
   },
   reducers: {
     logout: (state) => {
       state.user = null;
-      localStorage.removeItem("token"); // Clear token on logout
+      state.users = []; 
+      localStorage.removeItem("token"); 
       toast.success("Logged out successfully!");
     },
   },
   extraReducers: (builder) => {
     builder
+      .addCase(fetchAllUsers.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchAllUsers.fulfilled, (state, action) => {
+        state.loading = false;
+        state.users = action.payload;
+        console.log(action.payload);
+        
+      })
+      .addCase(fetchAllUsers.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
       .addCase(fetchUser.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -105,6 +137,7 @@ const userSlice = createSlice({
         if (state.user?.id === action.payload) {
           state.user = null;
         }
+        state.users = state.users.filter((user) => user.id !== action.payload); // Remove deleted user from list
       });
   },
 });

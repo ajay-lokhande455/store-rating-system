@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { FaStar } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchStoreById } from "../features/storeSlice";
-import { submitRating, getRatingsByStore } from "../features/ratingSlice"; 
+import { submitRating } from "../features/ratingSlice"; 
 
 const Rating = () => {
   const { id } = useParams();
@@ -16,6 +16,7 @@ const Rating = () => {
   const [submitted, setSubmitted] = useState(false);
   const [alertMessage, setAlertMessage] = useState(null);
   const { user } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(fetchStoreById(id));
@@ -39,9 +40,9 @@ const Rating = () => {
       setSubmitted(true);
       setAlertMessage("Thank you for your feedback! Your rating has been submitted.");
       
+      
       // Hide alert after 3 seconds
       setTimeout(() => setAlertMessage(null), 3000);
-
       // dispatch(getRatingsByStore(id));
     }
   };

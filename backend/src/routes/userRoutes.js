@@ -11,4 +11,5 @@ router.put('/update-password', authMiddleware(), updatePassword);
 router.delete('/:id', authMiddleware(['admin']), deleteUser); 
 router.put('/:id', authMiddleware(), updateUser); 
 
+
 module.exports = router;
