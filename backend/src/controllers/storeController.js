@@ -24,10 +24,11 @@ exports.getStores = async (req, res) => {
 
 exports.getAllStores = async (req, res) => {
   try {
-    const stores = await Store.findAll({ include: [{ model: User, as: 'owner' }] });
+    const stores = await Store.findAll();
     res.json(stores);
   } catch (error) {
     res.status(500).json({ error: 'Server error' });
+    console.log(error);
   }
 };
 

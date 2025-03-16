@@ -49,7 +49,7 @@ const Login = ({ onClose, onSignup }) => {
         </button>
 
         <h2 className="text-2xl font-bold text-center text-gray-800">Login</h2>
-        {error && <p className="text-red-500 text-center mt-2">{error}</p>}
+        {error && <p className="text-red-500 text-center mt-2">{JSON.stringify(error)}</p>}
 
         <form onSubmit={handleSubmit} className="mt-4">
           <div className="mb-4">
