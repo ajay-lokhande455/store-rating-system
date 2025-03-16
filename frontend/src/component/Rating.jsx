@@ -1,15 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { FaStar } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchStoreById } from "../features/storeSlice";
-import { submitRating } from "../features/ratingSlice"; // Import the submitRating action
+import { submitRating, getRatingsByStore } from "../features/ratingSlice"; 
 
 const Rating = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const { selectedStore: storeDetails, loading, error } = useSelector((state) => state.stores);
-  const { loading: ratingLoading, error: ratingError } = useSelector((state) => state.rating);
+  const { ratings, loading: ratingLoading, error: ratingError } = useSelector((state) => state.rating);
+  const { user } = useSelector((state) => state.auth);
 
   const [userRating, setUserRating] = useState(null);
   const [review, setReview] = useState("");
@@ -17,23 +18,25 @@ const Rating = () => {
 
   useEffect(() => {
     dispatch(fetchStoreById(id));
+    dispatch(getRatingsByStore(id));
   }, [dispatch, id]);
 
   const handleRatingSubmit = (rating) => {
     setUserRating(rating);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (userRating && review.trim()) {
-      dispatch(
+      await dispatch(
         submitRating({
-          user_id: 1, 
+          user_id: user.id, 
           store_id: id,
           rating: userRating,
           description: review,
         })
       );
       setSubmitted(true);
+      dispatch(getRatingsByStore(id)); // Refresh ratings after submission
     }
   };
 
@@ -52,15 +55,9 @@ const Rating = () => {
       </div>
 
       <div className="md:w-1/2">
-        <h1 className="text-3xl md:text-4xl font-bold text-gray-900">
-          {storeDetails.name}
-        </h1>
-        <p className="text-lg md:text-xl text-gray-500 mt-2">
-          Address: {storeDetails.address}
-        </p>
-        <p className="text-lg md:text-xl text-gray-500 mt-2">
-          Overall Rating: {storeDetails.total_ratings} +
-        </p>
+        <h1 className="text-3xl md:text-4xl font-bold text-gray-900">{storeDetails.name}</h1>
+        <p className="text-lg md:text-xl text-gray-500 mt-2">Address: {storeDetails.address}</p>
+        <p className="text-lg md:text-xl text-gray-500 mt-2">Overall Rating: {storeDetails.total_ratings}+</p>
 
         <div className="w-full border-t border-gray-300 my-6"></div>
 
@@ -69,9 +66,7 @@ const Rating = () => {
           {[...Array(5)].map((_, i) => (
             <FaStar
               key={i}
-              className={`cursor-pointer text-3xl transition-all ${
-                userRating > i ? "text-yellow-500" : "text-gray-300"
-              }`}
+              className={`cursor-pointer text-3xl transition-all ${userRating > i ? "text-yellow-500" : "text-gray-300"}`}
               onClick={() => handleRatingSubmit(i + 1)}
             />
           ))}
@@ -90,9 +85,7 @@ const Rating = () => {
             onClick={handleSubmit}
             disabled={userRating === null || review.trim() === "" || ratingLoading}
             className={`mt-4 px-6 py-2 text-white font-semibold transition ${
-              userRating && review.trim()
-                ? "bg-black hover:bg-gray-700"
-                : "bg-gray-400 cursor-not-allowed"
+              userRating && review.trim() ? "bg-black hover:bg-gray-700" : "bg-gray-400 cursor-not-allowed"
             }`}
           >
             {ratingLoading ? "Submitting..." : "Submit Rating"}
@@ -111,13 +104,24 @@ const Rating = () => {
         {submitted && (
           <div className="mt-4 p-4 bg-gray-100 rounded shadow-sm">
             <p className="text-green-500 text-lg">Thank you for your feedback!</p>
-            <p className="text-gray-700 mt-2">
-              <strong>Your Rating:</strong> {userRating} ★
-            </p>
-            <p className="text-gray-700 mt-2">
-              <strong>Your Review:</strong> {review}
-            </p>
+            <p className="text-gray-700 mt-2"><strong>Your Rating:</strong> {userRating} ★</p>
+            <p className="text-gray-700 mt-2"><strong>Your Review:</strong> {review}</p>
           </div>
+        )}
+
+        <div className="w-full border-t border-gray-300 my-6"></div>
+        <h2 className="text-2xl font-semibold text-gray-900">Customer Reviews</h2>
+        {ratings.length > 0 ? (
+          <ul className="mt-4">
+            {ratings.map((r, index) => (
+              <li key={index} className="bg-gray-100 p-3 rounded shadow-sm mt-2">
+                <p className="text-gray-900 font-semibold">Rating: {r.rating} ★</p>
+                <p className="text-gray-700">{r.description}</p>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p className="text-gray-500 mt-2">No reviews yet. Be the first to review!</p>
         )}
       </div>
     </div>
