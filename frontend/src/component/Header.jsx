@@ -53,9 +53,6 @@ const Header = () => {
             <Link to="/stores">STORES</Link>
           </li>
           <li className="hover:text-black cursor-pointer">
-            <Link to="/rating">RATING</Link>
-          </li>
-          <li className="hover:text-black cursor-pointer">
             <Link to="/contact">CONTACT</Link>
           </li>
         </ul>
