@@ -21,26 +21,17 @@ exports.submitRating = async (req, res) => {
     res.status(400).json({ error: 'Invalid data' });
   }
 };
+
 exports.getRatingsByStore = async (req, res) => {
   try {
-    const { id } = req.params;
-    console.log("Store ID:", id);
+      const ratings = await Rating.findAll({
+          where: { store_id: req.params.storeId }, 
+          include: [{ model: User }]
+      });
 
-    const store = await Store.findByPk(id);
-    if (!store) {
-      console.log("Store not found");
-      return res.status(404).json({ error: "Store not found" });
-    }
-
-    const ratings = await Rating.findAll({
-      where: { store_id: id },
-      include: [{ model: User, attributes: ["id", "name", "email"] }],
-      order: [["createdAt", "DESC"]],
-    });
-
-    res.json({ store, ratings });
+      res.json(ratings);
   } catch (error) {
-    console.error("Internal Server Error:", error); 
-    res.status(500).json({ error: "Server error", details: error.message });
+      console.error(error);
+      res.status(500).json({ error: "Internal Server Error" });
   }
 };

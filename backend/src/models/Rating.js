@@ -11,4 +11,12 @@ const Rating = sequelize.define('Rating', {
   updatedAt: { type: DataTypes.DATE, defaultValue: DataTypes.NOW },
 });
 
+Rating.associate = (models) => {
+  Rating.belongsTo(models.User, { foreignKey: 'user_id' });
+  Rating.belongsTo(models.Store, { foreignKey: 'store_id' });
+};
+
 module.exports = Rating;
+
+
+

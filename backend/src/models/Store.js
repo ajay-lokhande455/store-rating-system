@@ -12,4 +12,8 @@ const Store = sequelize.define('Store', {
   total_ratings: { type: DataTypes.INTEGER, defaultValue: 0 },
 });
 
+Store.associate = (models) => {
+  Store.belongsTo(models.User, { foreignKey: 'owner_id' });
+  Store.hasMany(models.Rating, { foreignKey: 'store_id' });
+};
 module.exports = Store;

@@ -16,3 +16,4 @@ sequelize.sync({ alter: true })
   .catch((error) => console.error(" Error syncing database:", error));
 
 module.exports = { sequelize, User, Store, Rating };
+

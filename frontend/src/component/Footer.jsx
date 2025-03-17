@@ -8,7 +8,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
         
           <div>
-            <h2 className="text-lg font-bold text-white">Company</h2>
+            <h2 className="text-lg font-bold text-white">Store Rating</h2>
             <p className="mt-2 text-gray-400">
               Your trusted platform for quality products and services.
             </p>
@@ -62,7 +62,7 @@ const Footer = () => {
         </div>
 
         <div className="border-t border-gray-700 mt-6 pt-6 text-center">
-          <p className="text-sm text-gray-500">© 2025 Your Company. All rights reserved.</p>
+          <p className="text-sm text-gray-500">© 2025 Ajay Lokhande. All rights reserved.</p>
         </div>
       </div>
     </footer>

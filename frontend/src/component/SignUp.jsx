@@ -19,12 +19,43 @@ const Signup = ({ onClose }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  const validateForm = () => {
+    const { name, email, password, address } = formData;
+
+    if (name.length < 20 || name.length > 60) {
+      return "Name must be between 20 and 60 characters.";
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      return "Invalid email format.";
+    }
+    if (
+      password.length < 8 ||
+      password.length > 16 ||
+      !/[A-Z]/.test(password) ||
+      !/[!@#$%^&*]/.test(password)
+    ) {
+      return "Password must be 8-16 characters long, include at least one uppercase letter and one special character.";
+    }
+    if (address.length > 400) {
+      return "Address must be a maximum of 400 characters.";
+    }
+
+    return "";
+  };
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const validationError = validateForm();
+    if (validationError) {
+      setErr(validationError);
+      toast.error(validationError);
+      return;
+    }
+
     try {
       await dispatch(signup(formData)).unwrap();
       onClose();
@@ -99,6 +130,7 @@ const Signup = ({ onClose }) => {
               required
             >
               <option value="user">User</option>
+              <option value="admin">Admin</option>
               <option value="store_owner">Store Owner</option>
             </select>
           </div>

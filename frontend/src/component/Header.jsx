@@ -65,7 +65,7 @@ const Header = () => {
         <Link to="/">Store</Link>
       </div>
 
-      {/* Hamburger Button (Mobile) */}
+      
       <button
         className="md:hidden text-2xl"
         onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -73,7 +73,7 @@ const Header = () => {
         {mobileMenuOpen ? <FaTimes /> : <FaBars />}
       </button>
 
-      {/* Search Bar with Dropdown */}
+      
       <div className="relative w-96 hidden md:block" ref={searchDropdownRef}>
         <input
           type="text"
@@ -101,7 +101,7 @@ const Header = () => {
         )}
       </div>
 
-      {/* Desktop Navigation */}
+  
       <nav className="hidden md:flex items-center gap-10">
         <ul className="flex gap-10 text-gray-500 text-sm">
           <li className="hover:text-black cursor-pointer">
@@ -156,7 +156,6 @@ const Header = () => {
         )}
       </nav>
 
-      {/* Mobile Navigation */}
       {mobileMenuOpen && (
         <div className="absolute top-16 z-40 left-0 w-full bg-white shadow-md p-4 md:hidden">
           <ul className="flex flex-col gap-4 text-gray-500 text-sm">
