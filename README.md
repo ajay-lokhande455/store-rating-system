@@ -1,5 +1,10 @@
 # Store Rating System
 
+## Live Link 
+```bash
+https://store-rating-system.vercel.app/
+```
+
 ## Overview
 
 The **Store Rating System** is a web application that allows users to rate and review stores. It provides RESTful APIs for users to submit ratings, retrieve store ratings, and manage users and stores.
