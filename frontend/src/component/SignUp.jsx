@@ -22,19 +22,19 @@ const Signup = ({ onClose }) => {
   const validateForm = () => {
     const { name, email, password, address } = formData;
 
-    if (name.length < 20 || name.length > 60) {
-      return "Name must be between 20 and 60 characters.";
+    if (name.length < 3 || name.length > 20) {
+      return "Name must be between 3 and 20 characters.";
     }
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       return "Invalid email format.";
     }
     if (
-      password.length < 8 ||
+      password.length < 6 ||
       password.length > 16 ||
       !/[A-Z]/.test(password) ||
       !/[!@#$%^&*]/.test(password)
     ) {
-      return "Password must be 8-16 characters long, include at least one uppercase letter and one special character.";
+      return "Password must be 6-16 characters long, include at least one uppercase letter and one special character.";
     }
     if (address.length > 400) {
       return "Address must be a maximum of 400 characters.";
