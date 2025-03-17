@@ -13,7 +13,7 @@ const StoreList = () => {
     <div className="overflow-x-auto">
       <h2 className="text-2xl font-bold mb-4">Stores</h2>
       <div className="bg-white shadow-md sm:pl-10">
-        <table className="w-screen min-w-max border-collapse">
+        <table className="w-full min-w-max border-collapse">
           <thead>
             <tr className="border-b bg-gray-100">
               <th className="p-2 text-left">Name</th>
