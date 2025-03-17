@@ -201,9 +201,10 @@ const Header = () => {
 
   {token ? (
     <>
+
       <li className="hover:text-black cursor-pointer">
         <Link to="/my-account" onClick={() => setMobileMenuOpen(false)}>
-          <FaUser className="text-gray-500 inline-block mr-2" /> My Profile
+          <FaUser className="text-gray-500 inline-block mr-2" />Hi, {user.name}
         </Link>
       </li>
       {user.role === "admin" && (
