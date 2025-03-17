@@ -188,25 +188,52 @@ const Header = () => {
           </div>
 
           <ul className="flex flex-col gap-4 text-gray-500 text-sm">
-            <li className="hover:text-black cursor-pointer">
-              <Link to="/stores" onClick={() => setMobileMenuOpen(false)}>
-                STORES
-              </Link>
-            </li>
-            <li className="hover:text-black cursor-pointer">
-              <Link to="/contact" onClick={() => setMobileMenuOpen(false)}>
-                CONTACT
-              </Link>
-            </li>
-            <li>
-            <button
-            className="bg-black text-white px-6 py-2 font-semibold hover:bg-gray-800"
-            onClick={() => setModal("login")}
-          >
-            Login
-          </button>
-            </li>
-          </ul>
+  <li className="hover:text-black cursor-pointer">
+    <Link to="/stores" onClick={() => setMobileMenuOpen(false)}>
+      STORES
+    </Link>
+  </li>
+  <li className="hover:text-black cursor-pointer">
+    <Link to="/contact" onClick={() => setMobileMenuOpen(false)}>
+      CONTACT
+    </Link>
+  </li>
+
+  {token ? (
+    <>
+      <li className="hover:text-black cursor-pointer">
+        <Link to="/my-account" onClick={() => setMobileMenuOpen(false)}>
+          <FaUser className="text-gray-500 inline-block mr-2" /> My Profile
+        </Link>
+      </li>
+      {user.role === "admin" && (
+        <li className="hover:text-black cursor-pointer">
+          <Link to="/adminPage" onClick={() => setMobileMenuOpen(false)}>
+            <FaPager className="text-gray-500 inline-block mr-2" /> Admin Page
+          </Link>
+        </li>
+      )}
+      <li>
+        <button
+          onClick={handleLogout}
+          className="flex items-center gap-2 text-left w-full px-1 py-2 text-gray-700 hover:bg-gray-100"
+        >
+          <FaSignOutAlt className="text-gray-500" /> Logout
+        </button>
+      </li>
+    </>
+  ) : (
+    <li>
+      <button
+        className="bg-black text-white px-6 py-2 font-semibold hover:bg-gray-800"
+        onClick={() => setModal("login")}
+      >
+        Login
+      </button>
+    </li>
+  )}
+</ul>
+
         </div>
       )}
 
