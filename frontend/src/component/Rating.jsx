@@ -48,7 +48,7 @@ const Rating = () => {
   };
 
   if (loading) return <p>Loading store details...</p>;
-  if (error) return <p className="text-red-500">{error}</p>;
+  if (error) return <p className="text-red-500">{alert("Please Log In First to display Store details")}</p>;
   if (!storeDetails) return <p>Store not found.</p>;
 
   return (

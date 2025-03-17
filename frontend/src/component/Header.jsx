@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { FaSearch, FaUser, FaSignOutAlt, FaPager, FaBars, FaTimes, FaStore, FaUsers } from "react-icons/fa";
+import { FaSearch, FaUser, FaSignOutAlt, FaPager, FaBars, FaTimes } from "react-icons/fa";
 import Login from "../component/Login";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../features/authSlice";
@@ -44,6 +44,7 @@ const Header = () => {
     navigate(`/rating/${storeId}`);
     setSearchQuery("");
     setSearchResults([]);
+    setMobileMenuOpen(false);
   };
 
   useEffect(() => {
@@ -72,7 +73,7 @@ const Header = () => {
         {mobileMenuOpen ? <FaTimes /> : <FaBars />}
       </button>
 
-
+      {/* Search Bar (Desktop) */}
       <div className="relative w-96 hidden md:block" ref={searchDropdownRef}>
         <input
           type="text"
@@ -154,10 +155,11 @@ const Header = () => {
         )}
       </nav>
 
+      {/* Mobile Navigation */}
       {mobileMenuOpen && (
         <div className="absolute top-16 z-40 left-0 w-full bg-white shadow-md p-4 md:hidden">
 
-
+          {/* Mobile Search Bar */}
           <div className="relative w-full mb-4">
             <input
               type="text"
@@ -167,6 +169,22 @@ const Header = () => {
               className="w-3/4 p-2 pl-8 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500 text-sm"
             />
             <FaSearch className="absolute left-2 top-3 text-gray-400 text-sm" />
+
+            {searchResults.length > 0 && (
+              <ul className="absolute w-3/4 bg-white border border-gray-300 mt-1 shadow-lg z-50">
+                {searchResults.map((store) => (
+                  <li
+                    key={store.id}
+                    onClick={() => handleSelectStore(store.id)}
+                    className="p-2 cursor-pointer hover:bg-gray-100"
+                  >
+                    <Link to={`/rating/${store.id}`} className="block w-full h-full">
+                      {store.name} - {store.address}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
 
           <ul className="flex flex-col gap-4 text-gray-500 text-sm">
@@ -179,6 +197,14 @@ const Header = () => {
               <Link to="/contact" onClick={() => setMobileMenuOpen(false)}>
                 CONTACT
               </Link>
+            </li>
+            <li>
+            <button
+            className="bg-black text-white px-6 py-2 font-semibold hover:bg-gray-800"
+            onClick={() => setModal("login")}
+          >
+            Login
+          </button>
             </li>
           </ul>
         </div>
