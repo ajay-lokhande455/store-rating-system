@@ -1,10 +1,10 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-// Base API URL
+
 const API_URL = "https://store-rating-system.onrender.com/api/auth";
 
-// Async thunk for user signup
+
 export const signup = createAsyncThunk("auth/signup", async (userData, { rejectWithValue }) => {
     try {
         const response = await axios.post(`${API_URL}/signup`, userData);
@@ -14,12 +14,12 @@ export const signup = createAsyncThunk("auth/signup", async (userData, { rejectW
     }
 });
 
-// Async thunk for user login
+
 export const login = createAsyncThunk("auth/login", async (userData, { rejectWithValue }) => {
     try {
         const response = await axios.post(`${API_URL}/login`, userData);
         
-        // Store token and user data in localStorage
+
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("user", JSON.stringify(response.data.user));
         
@@ -29,18 +29,17 @@ export const login = createAsyncThunk("auth/login", async (userData, { rejectWit
     }
 });
 
-// Async thunk for logout
 export const logout = createAsyncThunk("auth/logout", async () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
     return null;
 });
 
-// Load user data from localStorage
+
 const storedUser = localStorage.getItem("user");
 const storedToken = localStorage.getItem("token");
 
-// Auth Slice
+
 const authSlice = createSlice({
     name: "auth",
     initialState: {

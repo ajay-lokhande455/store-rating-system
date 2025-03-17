@@ -65,7 +65,6 @@ const Header = () => {
         <Link to="/">Store</Link>
       </div>
 
-      
       <button
         className="md:hidden text-2xl"
         onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -73,7 +72,7 @@ const Header = () => {
         {mobileMenuOpen ? <FaTimes /> : <FaBars />}
       </button>
 
-      
+
       <div className="relative w-96 hidden md:block" ref={searchDropdownRef}>
         <input
           type="text"
@@ -101,7 +100,6 @@ const Header = () => {
         )}
       </div>
 
-  
       <nav className="hidden md:flex items-center gap-10">
         <ul className="flex gap-10 text-gray-500 text-sm">
           <li className="hover:text-black cursor-pointer">
@@ -158,6 +156,19 @@ const Header = () => {
 
       {mobileMenuOpen && (
         <div className="absolute top-16 z-40 left-0 w-full bg-white shadow-md p-4 md:hidden">
+
+
+          <div className="relative w-full mb-4">
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={handleSearchChange}
+              placeholder="Search..."
+              className="w-3/4 p-2 pl-8 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500 text-sm"
+            />
+            <FaSearch className="absolute left-2 top-3 text-gray-400 text-sm" />
+          </div>
+
           <ul className="flex flex-col gap-4 text-gray-500 text-sm">
             <li className="hover:text-black cursor-pointer">
               <Link to="/stores" onClick={() => setMobileMenuOpen(false)}>
@@ -170,56 +181,6 @@ const Header = () => {
               </Link>
             </li>
           </ul>
-
-          {token ? (
-            <div className="mt-4">
-              <p className="text-lg font-medium">Hi, {user?.name}</p>
-              <div className="mt-2">
-                <Link
-                  to="/my-account"
-                  className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  <FaUser className="text-gray-500 inline-block mr-2" />
-                  My Account
-                </Link>
-                {user.role === "admin" && (
-                  <Link
-                    to="/adminPage"
-                    className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    <FaStore className="text-gray-500 inline-block mr-2" />
-                    Stores
-                  </Link>
-                )}
-                {user.role === "admin" && (
-                  <Link
-                    to="/allUsers"
-                    className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    <FaUsers className="text-gray-500 inline-block mr-2" />
-                    users
-                  </Link>
-                )}
-                <button
-                  onClick={handleLogout}
-                  className="w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
-                >
-                  <FaSignOutAlt className="text-gray-500 inline-block mr-2" />
-                  Logout
-                </button>
-              </div>
-            </div>
-          ) : (
-            <button
-              className="w-full mt-4 bg-black text-white px-6 py-2 font-semibold hover:bg-gray-800"
-              onClick={() => setModal("login")}
-            >
-              Login
-            </button>
-          )}
         </div>
       )}
 

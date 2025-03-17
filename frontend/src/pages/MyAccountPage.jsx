@@ -8,7 +8,6 @@ const MyAccountPage = () => {
 
   return (
     <div className="flex flex-col md:flex-row min-h-screen bg-gray-100">
-      {/* Sidebar */}
       <div className="w-full md:w-64 bg-white shadow-md p-5 md:h-screen flex md:flex-col md:justify-start justify-between items-center md:items-start">
         <h2 className="text-xl font-semibold mb-6 hidden md:block">My Account</h2>
         <ul className="space-y-4 w-full">
@@ -31,7 +30,6 @@ const MyAccountPage = () => {
         </ul>
       </div>
 
-      {/* Content */}
       <div className="flex-1 p-6 w-full">
         {activeTab === "profile" && <Profile />}
         {activeTab === "edit" && <EditUser />}

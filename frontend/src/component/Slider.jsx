@@ -30,9 +30,9 @@ const Slider = () => {
               src={src}
               alt={`Slide ${index + 1}`}
               className="w-full h-full object-cover"
-              onError={(e) => (e.target.style.display = "none")} // Hide broken images
+              onError={(e) => (e.target.style.display = "none")} 
             />
-            {/* Overlay Text */}
+  
             <div className="absolute inset-0 flex flex-col justify-center items-center bg-black/50 text-white text-center px-4">
               <h1 className="text-xl sm:text-2xl md:text-4xl lg:text-5xl font-bold drop-shadow-lg">
                 Find Your Favorite Store & Rate It!

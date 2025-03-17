@@ -61,7 +61,7 @@ const AdminPage = () => {
 
   return (
     <div className="flex flex-col md:flex-row min-h-screen bg-gray-100">
-      {/* Sidebar */}
+
       <aside className={`relative ${sidebarOpen ? "w-64" : "w-20"} bg-white shadow-md transition-all  md:h-full z-50 md:block  ${sidebarOpen ? "block" : "hidden"}`}>
 
         <div className="flex justify-between items-center p-4 border-b">
@@ -83,9 +83,9 @@ const AdminPage = () => {
         </nav>
       </aside>
 
-      {/* Main Content */}
+  
       <main className="flex-1 p-6 mt-16  md:mt-0 m">
-        {/* Search Input */}
+ 
         <input
           type="text"
           placeholder="Search by Name, Email, Address, or Role..."
@@ -94,14 +94,12 @@ const AdminPage = () => {
           className="w-full p-2 mb-4 border border-gray-300 rounded-md"
         />
 
-        {/* Create Store Button */}
         {selectedTab === "stores" && (
           <button onClick={() => setShowCreateForm(!showCreateForm)} className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 mb-4 rounded-md">
             <FaPlus /> Create Store
           </button>
         )}
 
-        {/* Create Store Form */}
         {showCreateForm && selectedTab === "stores" && (
           <form onSubmit={handleCreateStore} className="bg-white p-4 shadow-md rounded-md">
             <h2 className="text-lg font-bold mb-2">Create New Store</h2>
@@ -114,7 +112,7 @@ const AdminPage = () => {
           </form>
         )}
 
-        {/* Store & User List */}
+  
         {selectedTab === "stores" ? <StoreList stores={filteredData(stores)} /> : <UserList users={filteredData(users)} />}
       </main>
     </div>

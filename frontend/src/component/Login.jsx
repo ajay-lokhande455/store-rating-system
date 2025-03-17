@@ -3,8 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { login } from "../features/authSlice";
 import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css"; // Import toast styles
-
+import "react-toastify/dist/ReactToastify.css"; 
 const Login = ({ onClose, onSignup }) => {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
@@ -27,7 +26,7 @@ const Login = ({ onClose, onSignup }) => {
     try {
       if (!token) {
         await dispatch(login(formData)).unwrap();
-        toast.success("Login successful!"); // 🎉 Success toast
+        toast.success("Login successful!"); 
         onClose();
         navigate("/");
       }

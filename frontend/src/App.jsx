@@ -7,7 +7,7 @@ import StorePage from "./pages/StorePage";
 import RatingPage from "./pages/RatingPage";
 import ContactPage from "./pages/ContactPage";
 import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css"; // Ensure CSS is imported
+import "react-toastify/dist/ReactToastify.css"; 
 import MyAccountPage from "./pages/MyAccountPage";
 import AdminPage from "./pages/AdminPage";
 import UserList from "./component/UserList";
