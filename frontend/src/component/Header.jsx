@@ -1,6 +1,15 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { FaSearch, FaUser, FaSignOutAlt, FaPager, FaBars, FaTimes } from "react-icons/fa";
+import {
+  FaSearch,
+  FaUser,
+  FaSignOutAlt,
+  FaPager,
+  FaBars,
+  FaTimes,
+  FaStore,
+  FaUsers,
+} from "react-icons/fa";
 import Login from "../component/Login";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../features/authSlice";
@@ -92,7 +101,10 @@ const Header = () => {
                 onClick={() => handleSelectStore(store.id)}
                 className="p-2 cursor-pointer hover:bg-gray-100"
               >
-                <Link to={`/rating/${store.id}`} className="block w-full h-full">
+                <Link
+                  to={`/rating/${store.id}`}
+                  className="block w-full h-full"
+                >
                   {store.name} - {store.address}
                 </Link>
               </li>
@@ -103,6 +115,9 @@ const Header = () => {
 
       <nav className="hidden md:flex items-center gap-10">
         <ul className="flex gap-10 text-gray-500 text-sm">
+          <li className="hover:text-black cursor-pointer">
+            <Link to="/">HOME</Link>
+          </li>
           <li className="hover:text-black cursor-pointer">
             <Link to="/stores">STORES</Link>
           </li>
@@ -158,7 +173,6 @@ const Header = () => {
       {/* Mobile Navigation */}
       {mobileMenuOpen && (
         <div className="absolute top-16 z-40 left-0 w-full bg-white shadow-md p-4 md:hidden">
-
           {/* Mobile Search Bar */}
           <div className="relative w-full mb-4">
             <input
@@ -178,7 +192,10 @@ const Header = () => {
                     onClick={() => handleSelectStore(store.id)}
                     className="p-2 cursor-pointer hover:bg-gray-100"
                   >
-                    <Link to={`/rating/${store.id}`} className="block w-full h-full">
+                    <Link
+                      to={`/rating/${store.id}`}
+                      className="block w-full h-full"
+                    >
                       {store.name} - {store.address}
                     </Link>
                   </li>
@@ -188,58 +205,85 @@ const Header = () => {
           </div>
 
           <ul className="flex flex-col gap-4 text-gray-500 text-sm">
-  <li className="hover:text-black cursor-pointer">
-    <Link to="/stores" onClick={() => setMobileMenuOpen(false)}>
-      STORES
-    </Link>
-  </li>
-  <li className="hover:text-black cursor-pointer">
-    <Link to="/contact" onClick={() => setMobileMenuOpen(false)}>
-      CONTACT
-    </Link>
-  </li>
+            <li className="hover:text-black cursor-pointer">
+              <Link to="/" onClick={() => setMobileMenuOpen(false)}>
+                HOME
+              </Link>
+            </li>
+            <li className="hover:text-black cursor-pointer">
+              <Link to="/stores" onClick={() => setMobileMenuOpen(false)}>
+                STORES
+              </Link>
+            </li>
+            <li className="hover:text-black cursor-pointer">
+              <Link to="/contact" onClick={() => setMobileMenuOpen(false)}>
+                CONTACT
+              </Link>
+            </li>
 
-  {token ? (
-    <>
-
-      <li className="hover:text-black cursor-pointer">
-        <Link to="/my-account" onClick={() => setMobileMenuOpen(false)}>
-          <FaUser className="text-gray-500 inline-block mr-2" />Hi, {user.name}
-        </Link>
-      </li>
-      {user.role === "admin" && (
-        <li className="hover:text-black cursor-pointer">
-          <Link to="/adminPage" onClick={() => setMobileMenuOpen(false)}>
-            <FaPager className="text-gray-500 inline-block mr-2" /> Admin Page
-          </Link>
-        </li>
-      )}
-      <li>
-        <button
-          onClick={handleLogout}
-          className="flex items-center gap-2 text-left w-full px-1 py-2 text-gray-700 hover:bg-gray-100"
-        >
-          <FaSignOutAlt className="text-gray-500" /> Logout
-        </button>
-      </li>
-    </>
-  ) : (
-    <li>
-      <button
-        className="bg-black text-white px-6 py-2 font-semibold hover:bg-gray-800"
-        onClick={() => setModal("login")}
-      >
-        Login
-      </button>
-    </li>
-  )}
-</ul>
-
+            {token ? (
+              <>
+                <li className="hover:text-black cursor-pointer">
+                  <Link
+                    to="/my-account"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    <FaUser className="text-gray-500 inline-block mr-2" />
+                    Hi, {user.name}
+                  </Link>
+                </li>
+                {user.role === "admin" && (
+                  <li className="hover:text-black cursor-pointer">
+                    <Link
+                      to="/adminPage"
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      <FaStore className="text-gray-500 inline-block mr-2" />{" "}
+                      Stores
+                    </Link>
+                  </li>
+                )}
+                <li>
+                  <Link to="/allUsers" onClick={() => setMobileMenuOpen(false)}>
+                    <FaUsers className="text-gray-500 inline-block mr-2" />{" "}
+                    Users
+                  </Link>
+                </li>
+                <li>
+                  <button
+                    onClick={handleLogout}
+                    className="flex items-center gap-2 text-left w-full px-1 py-2 text-gray-700 hover:bg-gray-100"
+                  >
+                    <FaSignOutAlt className="text-gray-500" /> Logout
+                  </button>
+                </li>
+              </>
+            ) : (
+              <li>
+                <button
+                  className="bg-black text-white px-6 py-2 font-semibold hover:bg-gray-800"
+                  onClick={() => setModal("login")}
+                >
+                  Login
+                </button>
+              </li>
+            )}
+          </ul>
         </div>
       )}
 
-      {modal === "login" && <Login onClose={() => setModal(null)} onSignup={() => setModal("signup")} />}
-      {modal === "signup" && <Signup onClose={() => setModal(null)} onLogin={() => setModal("login")} />}
+      {modal === "login" && (
+        <Login
+          onClose={() => setModal(null)}
+          onSignup={() => setModal("signup")}
+        />
+      )}
+      {modal === "signup" && (
+        <Signup
+          onClose={() => setModal(null)}
+          onLogin={() => setModal("login")}
+        />
+      )}
     </header>
   );
 };
