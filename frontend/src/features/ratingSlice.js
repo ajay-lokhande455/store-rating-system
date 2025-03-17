@@ -67,7 +67,7 @@ const ratingsSlice = createSlice({
       .addCase(submitRating.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
-        console.log(action.payload);
+
       })
       .addCase(getRatingsByStore.pending, (state) => {
         state.loading = true;

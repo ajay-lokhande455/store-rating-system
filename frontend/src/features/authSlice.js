@@ -70,7 +70,7 @@ const authSlice = createSlice({
                 state.token = action.payload.token;
                 state.user = action.payload.user;
 
-                console.log("User logged in:", action.payload.user);
+            
             })
             .addCase(login.rejected, (state, action) => {
                 state.status = "failed";

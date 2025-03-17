@@ -77,7 +77,6 @@ const storeSlice = createSlice({
       .addCase(searchStores.fulfilled, (state, action) => {
         state.loading = false;
         state.stores = action.payload;
-        console.log(action.payload);
         
       })
       .addCase(searchStores.rejected, (state, action) => {
