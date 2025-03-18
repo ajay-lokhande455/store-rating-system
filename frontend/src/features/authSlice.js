@@ -44,6 +44,7 @@ const authSlice = createSlice({
     name: "auth",   
     initialState: {
         user: storedUser ? JSON.parse(storedUser) : null,
+        storeId : null,
         token: storedToken || null,
         status: "idle",
         error: null,
@@ -69,6 +70,7 @@ const authSlice = createSlice({
                 state.status = "succeeded";
                 state.token = action.payload.token;
                 state.user = action.payload.user;
+                state.storeId = action.payload.storeId;
 
             
             })

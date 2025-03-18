@@ -6,13 +6,13 @@ import { getRatingsByStore } from "../features/ratingSlice";
 const StoreRatingsList = () => {
   const dispatch = useDispatch();
   const { ratings } = useSelector((state) => state.rating);
-  const { user } = useSelector((state) => state.auth);
+  const { storeId } = useSelector((state) => state.auth);
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredRatings, setFilteredRatings] = useState([]);
 
-  console.log(user);
+  console.log(storeId);
   
-  const id = "27f3e797-8260-49fc-b86d-484d20c76fd4";
+  const id = storeId;
   useEffect(() => {
     dispatch(getRatingsByStore(id));
   }, [dispatch, id]);
