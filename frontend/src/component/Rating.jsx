@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { FaStar } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchStoreById } from "../features/storeSlice";
-import { submitRating } from "../features/ratingSlice"; 
+import { getRatingsByStore, submitRating } from "../features/ratingSlice"; 
 
 const Rating = () => {
   const { id } = useParams();
@@ -11,6 +11,8 @@ const Rating = () => {
   const { selectedStore: storeDetails, loading, error } = useSelector((state) => state.stores);
   const { ratings, loading: ratingLoading, error: ratingError } = useSelector((state) => state.rating);
 
+  console.log(ratings);
+  
   const [userRating, setUserRating] = useState(null);
   const [review, setReview] = useState("");
   const [submitted, setSubmitted] = useState(false);
@@ -20,7 +22,7 @@ const Rating = () => {
 
   useEffect(() => {
     dispatch(fetchStoreById(id));
-    // dispatch(getRatingsByStore(id));
+    dispatch(getRatingsByStore(id));
   }, [dispatch, id]);
 
   const handleRatingSubmit = (rating) => {
