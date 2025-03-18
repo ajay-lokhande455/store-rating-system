@@ -14,6 +14,10 @@ const images = [
 
 const Slider = () => {
   const navigate = useNavigate();
+  const handleNavigate =() => {
+    navigate("/stores");
+  
+  }
   return (
     <div className="relative w-full h-[70vh]">
       <Swiper
@@ -40,7 +44,7 @@ const Slider = () => {
               <p className="text-sm sm:text-lg md:text-xl mt-2">
                 Discover amazing places and share your experience.
               </p>
-              <button onClick={() => navigate("/stores")} className="mt-4 px-4 py-2 sm:px-6 sm:py-3 bg-white text-black font-semibold hover:bg-gray-300 transition text-sm sm:text-base">
+              <button onClick={handleNavigate} className="mt-4 px-4 py-2 sm:px-6 sm:py-3 bg-white text-black font-semibold hover:bg-gray-300 transition text-sm sm:text-base">
                 Explore Now
               </button>
             </div>

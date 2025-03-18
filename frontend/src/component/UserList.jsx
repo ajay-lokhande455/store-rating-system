@@ -29,7 +29,7 @@ const UserList = () => {
         placeholder="Search by Name, Email, Address, or Role..."
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
-        className="w-full p-2 mb-4 border border-gray-300 rounded-md"
+        className="w-full p-2 ml-2 mb-4 border border-gray-300 rounded-md"
       />
 
       <div className="bg-white shadow-md p-4">

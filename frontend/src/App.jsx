@@ -11,6 +11,7 @@ import "react-toastify/dist/ReactToastify.css";
 import MyAccountPage from "./pages/MyAccountPage";
 import AdminPage from "./pages/AdminPage";
 import UserList from "./component/UserList";
+import StoreRatingsList from "./component/StoreRatingList";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           <Route path= "/my-account" element={<MyAccountPage />} />
           <Route path="/AdminPage" element={<AdminPage />} />
           <Route path="/allUsers" element={<UserList />} />
+          <Route path="/storeRatings" element={<StoreRatingsList />} />
         </Routes>
         <Footer />
       </Router>

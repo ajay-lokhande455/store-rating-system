@@ -1,28 +1,24 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FaStar } from "react-icons/fa";
-
-const userRatings = [
-  {
-    id: 1,
-    name: "Alice Johnson",
-    rating: 5,
-    description: "Excellent service and great product quality! Highly recommended."
-  },
-  {
-    id: 2,
-    name: "Michael Smith",
-    rating: 4,
-    description: "Good store, but there is room for improvement in customer service."
-  },
-  {
-    id: 3,
-    name: "Samantha Lee",
-    rating: 3,
-    description: "Average experience. The products are decent but overpriced."
-  }
-];
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import { getRatingsByStore } from "../features/ratingSlice";
 
 const UserRatingCard = () => {
+  const { id } = useParams();
+  const { ratings } = useSelector((state) => state.rating);
+  const dispatch = useDispatch();
+  const [showAll, setShowAll] = useState(false);
+
+  useEffect(() => {
+    dispatch(getRatingsByStore(id));
+  }, [dispatch, id]);
+
+  if (!ratings) return;
+  if (ratings.length === 0) return <p>No ratings found.</p>;
+
+  const visibleRatings = showAll ? ratings : ratings.slice(0, 6);
+
   return (
     <div className="w-full px-6 md:px-12 lg:px-24 py-14">
       <h1 className="text-4xl md:text-5xl font-bold text-gray-900">User Ratings</h1>
@@ -32,9 +28,9 @@ const UserRatingCard = () => {
 
       <div className="w-full border-t border-gray-300 my-10"></div>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 py-10">
-        {userRatings.map((user) => (
+        {visibleRatings.map((user) => (
           <div key={user.id} className="bg-white p-6 border border-gray-200">
-            <h2 className="text-lg font-bold text-gray-900">{user.name}</h2>
+            <h2 className="text-lg font-bold text-gray-900">{user.User.name}</h2>
             <div className="flex items-center my-2">
               {[...Array(user.rating)].map((_, i) => (
                 <FaStar key={i} className="text-yellow-500" />
@@ -44,6 +40,15 @@ const UserRatingCard = () => {
           </div>
         ))}
       </div>
+
+      {ratings.length > 6 && (
+        <button
+          onClick={() => setShowAll((prev) => !prev)}
+          className="mt-4 px-6 py-2 bg-black text-white font-semibold hover:bg-gray-700 transition"
+        >
+          {showAll ? "Show Less" : "See All Ratings"}
+        </button>
+      )}
     </div>
   );
 };

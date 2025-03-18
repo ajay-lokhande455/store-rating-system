@@ -32,10 +32,10 @@ const StoreList = () => {
         className="w-full p-2 mb-4 border border-gray-300 "
       />
 
-      <div className="bg-white shadow-md sm:pl-10">
+      <div className="bg-white shadow-md ">
         <table className="w-full min-w-max border-collapse">
           <thead>
-            <tr className="border-b bg-gray-100">
+            <tr className="border-b bg-gray-50">
               <th className="p-2 text-left">Name</th>
               <th className="p-2 text-left">Email</th>
               <th className="p-2 text-left">Address</th>

@@ -23,10 +23,10 @@ const Footer = () => {
                 <Link to="/" className="hover:text-white">Home</Link>
               </li>
               <li>
-                <a href="#" className="hover:text-white">About Us</a>
+                <Link to="#" className="hover:text-white">About Us</Link>
               </li>
               <li>
-                <a href="#" className="hover:text-white">Services</a>
+                <Link to="#" className="hover:text-white">Services</Link>
               </li>
               <li>
                 <Link to="/contact" className="hover:text-white">Contact</Link>
@@ -37,8 +37,8 @@ const Footer = () => {
           <div>
             <h2 className="text-lg font-bold text-white">Contact Us</h2>
             <ul className="mt-2 space-y-2">
-              <li>Email: contact@yourcompany.com</li>
-              <li>Phone: +123 456 7890</li>
+              <li>Email: ajaylokhande@Store.com</li>
+              <li>Phone: +91 7499385295</li>
               <li>Address: 123 Main Street, City, Country</li>
             </ul>
           </div>
@@ -46,18 +46,18 @@ const Footer = () => {
           <div>
             <h2 className="text-lg font-bold text-white">Follow Us</h2>
             <div className="flex space-x-4 mt-2">
-              <a href="#" className="text-gray-400 hover:text-white">
+              <Link to="#" className="text-gray-400 hover:text-white">
                 <FaFacebook size={24} />
-              </a>
-              <a href="#" className="text-gray-400 hover:text-white">
+              </Link>
+              <Link to="#" className="text-gray-400 hover:text-white">
                 <FaTwitter size={24} />
-              </a>
-              <a href="#" className="text-gray-400 hover:text-white">
+              </Link>
+              <Link to="#" className="text-gray-400 hover:text-white">
                 <FaInstagram size={24} />
-              </a>
-              <a href="#" className="text-gray-400 hover:text-white">
+              </Link>
+              <Link to="#" className="text-gray-400 hover:text-white">
                 <FaLinkedin size={24} />
-              </a>
+              </Link>
             </div>
           </div>
         </div>

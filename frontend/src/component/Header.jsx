@@ -71,7 +71,7 @@ const Header = () => {
 
   return (
     <header className="flex justify-between items-center p-4 px-10 bg-white border-b border-gray-200 relative">
-      <div className="text-3xl font-bold underline">
+      <div className="text-3xl font-bold ">
         <Link to="/">Store</Link>
       </div>
 
@@ -151,6 +151,17 @@ const Header = () => {
                     Admin Page
                   </Link>
                 )}
+
+                {user.role === "store_owner" && (
+                  <Link
+                    to="/storeRatings"
+                    className="flex items-center gap-2 px-4 py-2 text-gray-700 hover:bg-gray-100"
+                  >
+                    <FaPager className="text-gray-500" />
+                    Your Store
+                  </Link>
+                )}
+
                 <button
                   onClick={handleLogout}
                   className="flex items-center gap-2 w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
@@ -243,12 +254,24 @@ const Header = () => {
                     </Link>
                   </li>
                 )}
-                <li>
+                {user.role === "store_owner" && (
+                  <li className="hover:text-black cursor-pointer">
+                    <Link
+                      to="/storeRatings"
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      <FaStore className="text-gray-500 inline-block mr-2" />{" "}
+                      Your Store
+                    </Link>
+                  </li>
+                )}
+                {user.role === "admin" && (
+                  <li>
                   <Link to="/allUsers" onClick={() => setMobileMenuOpen(false)}>
                     <FaUsers className="text-gray-500 inline-block mr-2" />{" "}
                     Users
                   </Link>
-                </li>
+                </li>)}
                 <li>
                   <button
                     onClick={handleLogout}

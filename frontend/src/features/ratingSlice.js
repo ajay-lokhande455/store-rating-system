@@ -67,7 +67,7 @@ const ratingsSlice = createSlice({
       .addCase(submitRating.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
-
+        
       })
       .addCase(getRatingsByStore.pending, (state) => {
         state.loading = true;
@@ -75,7 +75,7 @@ const ratingsSlice = createSlice({
       })
       .addCase(getRatingsByStore.fulfilled, (state, action) => {
         state.loading = false;
-        state.ratings = action.payload.ratings;
+        state.ratings = action.payload;
       })
       .addCase(getRatingsByStore.rejected, (state, action) => {
         state.loading = false;

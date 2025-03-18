@@ -26,7 +26,7 @@ exports.getRatingsByStore = async (req, res) => {
     const storeId = req.params.id;
     
     const ratings = await Rating.findAll({
-      where: { store_id: storeId },
+      where: { store_id: storeId},
       include: [
         {
           model: User,

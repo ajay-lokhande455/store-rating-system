@@ -7,14 +7,12 @@ import { Link } from "react-router-dom";
 const StoreCard = () => {
   const dispatch = useDispatch();
   const { stores, status, error } = useSelector((state) => state.stores);
-  
 
   useEffect(() => {
     dispatch(fetchStores());
   }, [dispatch]);
 
   if (status === "loading") return <p>Loading stores...</p>;
-  // if (error) return <p>Error: {error}</p>;
 
   return (
     <div className="w-full px-6 md:px-12 lg:px-24 py-14">
@@ -27,17 +25,16 @@ const StoreCard = () => {
 
       <div className="w-full border-t border-gray-300 my-10"></div>
 
-     
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 py-10">
         {stores.map((store) => (
-          <Link to={`/rating/${store.id}`}>
-          <div key={store.id
-          } className="bg-black w-full max-w-sm mx-auto  ">
-            <img
-              src={store.image}
-              alt={store.name}
-              className="w-full h-60 object-cover rounded-md"
-            />
+          <div key={store.id} className="bg-black w-full max-w-sm mx-auto">
+            <Link to={`/rating/${store.id}`}>
+              <img
+                src={store.image}
+                alt={store.name}
+                className="w-full h-60 object-cover rounded-md"
+              />
+            </Link>
             <div className="p-4 mt-4">
               <h2 className="text-xl text-white font-bold">{store.name}</h2>
               <p className="text-gray-300">{store.owner}</p>
@@ -47,16 +44,16 @@ const StoreCard = () => {
                 <span className="text-yellow-400 font-semibold mr-2">
                   Overall Rating:
                 </span>
-                <p className="text-white">{store.total_ratings
-                }+</p>
+                <p className="text-white">{store.total_ratings}+</p>
               </div>
 
-              <button className="mt-3 bg-red-500 text-white px-4 py-2  hover:bg-red-600 transition-all">
-                Give Rating
-              </button>
+              <Link to={`/rating/${store.id}`}>
+                <button className="mt-3 bg-red-500 text-white px-4 py-2 hover:bg-red-600 transition-all">
+                  Give Rating
+                </button>
+              </Link>
             </div>
           </div>
-          </Link>
         ))}
       </div>
     </div>

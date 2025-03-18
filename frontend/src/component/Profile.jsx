@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 
 const Profile = () => {
   const { user } = useSelector((state) => state.auth);
+  
 
   return (
     <div className="flex justify-center items-center min-h-screen ">
@@ -37,7 +38,7 @@ const Profile = () => {
 
           <div>
             <label className="text-gray-500 text-sm">Joined On</label>
-            <p className="text-lg font-medium">{new Date(user?.created_at).toLocaleDateString()}</p>
+            <p className="text-lg font-medium">{new Date(user?.createdAt).toLocaleDateString()}</p>
           </div>
         </div>
       </div>
