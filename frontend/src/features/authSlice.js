@@ -22,6 +22,8 @@ export const login = createAsyncThunk("auth/login", async (userData, { rejectWit
 
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("user", JSON.stringify(response.data.user));
+        localStorage.setItem("storeId", response.data.storeId);
+
         
         return response.data;
     } catch (error) {
@@ -32,19 +34,21 @@ export const login = createAsyncThunk("auth/login", async (userData, { rejectWit
 export const logout = createAsyncThunk("auth/logout", async () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
+    localStorage.removeItem("storeId");
     return null;
 });
 
 
 const storedUser = localStorage.getItem("user");
 const storedToken = localStorage.getItem("token");
+const storedStoreId = localStorage.getItem("storeId")
 
 
 const authSlice = createSlice({
     name: "auth",   
     initialState: {
         user: storedUser ? JSON.parse(storedUser) : null,
-        storeId : null,
+        storeId : storedStoreId || null,
         token: storedToken || null,
         status: "idle",
         error: null,
