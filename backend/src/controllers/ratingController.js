@@ -1,6 +1,4 @@
-const Rating = require('../models/Rating');
-const Store = require('../models/Store');
-const User = require('../models/User');
+const { Rating, User, Store } = require('../models');
 
 // Rating Controllers
 exports.submitRating = async (req, res) => {
@@ -22,16 +20,27 @@ exports.submitRating = async (req, res) => {
   }
 };
 
+
 exports.getRatingsByStore = async (req, res) => {
   try {
-      const ratings = await Rating.findAll({
-          where: { store_id: req.params.id }, 
-          include: [{ model: User }]
-      });
+    const storeId = req.params.id;
+    
+    const ratings = await Rating.findAll({
+      where: { store_id: storeId },
+      include: [
+        {
+          model: User,
+          attributes: ['id', 'name', 'email'], 
+        },
+        {
+          model: Store,
+          attributes: ['id', 'name'],
+        },
+      ],
+    });
 
-      res.json(ratings);
+    res.json(ratings);
   } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: "Internal Server Error" });
+    res.status(500).json({ error: error.message });
   }
 };

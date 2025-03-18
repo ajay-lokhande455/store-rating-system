@@ -8,8 +8,10 @@ const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, proces
   logging: false, 
 });
 
-sequelize.authenticate({ alter: true })
-  .then(() => console.log("Database connected successfully."))
-  .catch(err => console.error("Error connecting to database:", err));
+ sequelize.sync({ force: false, alter: true })
+  .then(() => console.log('Database synchronized'))
+  .catch((error) => console.error('Error syncing database:', error));
 
-module.exports = sequelize;
+  module.exports = sequelize;
+
+// Example usage:
