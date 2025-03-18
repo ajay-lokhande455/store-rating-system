@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getRatingsByStore } from "../features/ratingSlice";
-import { fetchStores } from "../features/storeSlice";
+
 
 const StoreRatingsList = () => {
   const dispatch = useDispatch();
@@ -10,6 +10,8 @@ const StoreRatingsList = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredRatings, setFilteredRatings] = useState([]);
 
+  console.log(user);
+  
   const id = "27f3e797-8260-49fc-b86d-484d20c76fd4";
   useEffect(() => {
     dispatch(getRatingsByStore(id));

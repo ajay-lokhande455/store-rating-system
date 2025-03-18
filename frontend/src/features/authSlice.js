@@ -41,7 +41,7 @@ const storedToken = localStorage.getItem("token");
 
 
 const authSlice = createSlice({
-    name: "auth",
+    name: "auth",   
     initialState: {
         user: storedUser ? JSON.parse(storedUser) : null,
         token: storedToken || null,
