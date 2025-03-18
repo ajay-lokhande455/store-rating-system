@@ -8,13 +8,12 @@ const StoreRatingsList = () => {
   const { storeId } = useSelector((state) => state.auth);
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredRatings, setFilteredRatings] = useState([]);
-  
+
   const id = storeId;
   useEffect(() => {
     dispatch(getRatingsByStore(id));
   }, [dispatch, id]);
 
-  
   useEffect(() => {
     setFilteredRatings(
       ratings.filter((rating) =>
@@ -26,15 +25,15 @@ const StoreRatingsList = () => {
   }, [searchQuery, ratings]);
 
   return (
-    <div className="overflow-x-auto h-screen md:px-10">
-      <h2 className="text-2xl font-bold m-4">Your Store User Ratings</h2>
+    <div className="overflow-x-auto h-screen md:px-10 p-4">
+      <h2 className="text-2xl font-bold mb-4">Your Store User Ratings</h2>
 
       <input
         type="text"
         placeholder="Search by User, Store, or Description..."
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
-        className="w-full p-2 m-4 border border-gray-300 rounded-md"
+        className="w-full p-2 mb-4 border border-gray-300 rounded-md"
       />
 
       <div className="bg-white shadow-md p-4 overflow-x-auto">
@@ -61,7 +60,7 @@ const StoreRatingsList = () => {
               ))
             ) : (
               <tr>
-                <td colSpan="6" className="p-4 text-center text-gray-500">
+                <td colSpan="5" className="p-4 text-center text-gray-500">
                   No ratings found.
                 </td>
               </tr>
