@@ -4,7 +4,7 @@ const authMiddleware = require('../middleware/authMiddleware');
 
 const router = express.Router();
 
-router.get('/:id', authMiddleware(['store_owner']), getRatingsByStore);
+router.get('/:id', authMiddleware(), getRatingsByStore);
 router.post('/submit', authMiddleware(['user']), submitRating);
 
 
