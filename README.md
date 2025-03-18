@@ -1,6 +1,6 @@
 # Store Rating System
 
-## Live Link 
+## Live Link
 ```bash
 https://store-rating-system.vercel.app/
 ```
@@ -12,7 +12,8 @@ The **Store Rating System** is a web application that allows users to rate and r
 ## User Roles
 
 1. System Administrator
-2. Normal User
+2. Store Owner
+3. Normal User
 
 ## Functionalities
 
@@ -35,6 +36,15 @@ The **Store Rating System** is a web application that allows users to rate and r
 - Can apply filters on all listings based on Name, Email, Address, and Role.
 - Can view details of all users, including Name, Email, Address, and Role.
   - If the user is a Store Owner, their Rating should also be displayed.
+- Can log out from the system.
+
+### Store Owner
+
+- Can log in to the platform.
+- Can update their password after logging in.
+- Dashboard functionalities:
+  - View a list of users who have submitted ratings for their store.
+  - See the average rating of their store.
 - Can log out from the system.
 
 ### Normal User
@@ -101,7 +111,7 @@ Ensure you have the following installed:
 
 - **Node.js** (v14+)
 - **npm** or **yarn**
-- ** MySQL** database setup
+- **MySQL** database setup
 
 ### Steps to Install
 
@@ -229,7 +239,6 @@ store-rating-system/
 4. **Frontend not connecting to backend**
    - Ensure API base URL is correctly set in `frontend/src/api.js`.
    - Ensure the backend server is running before starting the frontend.
-
 
 ## License
 
